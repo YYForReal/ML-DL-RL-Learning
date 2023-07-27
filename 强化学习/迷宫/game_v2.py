@@ -2,16 +2,13 @@ import numpy as np
 import random
 import pygame
 import time
+import os
 
-# 迷宫地图，0表示可通行，1表示障碍物
-# from maze_generation import maze_map
-# maze = np.array(maze_map)
-# print(maze)
-# y = input("确认是否继续？")
-# if y == "0":
-#     exit()
-
-
+"""
+如果能够在自己电脑跑，还可以通过pygame看到窗口效果！
+最近开始学DQN啦，希望有同窗大佬能带我一起讨论。
+个人主页: https://blog.csdn.net/HYY_2000
+"""
 num_episodes = 2000  # 迭代次数
 epsilon = 0.1  # 随机率
 learning_rate = 0.1  # 学习率
@@ -52,6 +49,14 @@ maze = np.array([
 ])
 
 
+# 清空控制台输出
+def clear_console():
+    if os.name == 'nt':  # Windows系统
+        os.system('cls')
+    else:  # 其他系统（如Linux、macOS等）
+        os.system('clear')
+
+
 # 迷宫尺寸
 maze_height, maze_width = maze.shape
 
@@ -87,6 +92,26 @@ def draw_agent(agent):
     pygame.draw.circle(screen, (255, 0, 0), (col * cell_size + cell_size //
                        2, row * cell_size + cell_size // 2), cell_size // 3)
 
+# 控制台的绘制
+def draw_agent_console(agent):
+    row, col = agent.state
+    maze_with_agent = maze.copy()
+    maze_with_agent[row, col] = 2  # 用数字2表示智能体在迷宫中的位置
+    for row in range(maze_height):
+        for col in range(maze_width):
+            char = "#" if maze_with_agent[row, col] == 1 else "A" if maze_with_agent[row, col] == 2 else " "
+            print(char, end=" ")
+        print()
+        
+def show_all():
+    # 展示pygame的
+    draw_maze()
+    draw_agent(agent)
+    # 展示控制台的
+    clear_console()
+    draw_agent_console(agent)
+
+
 # 更新AI智能体在迷宫中的位置
 def update_agent(agent, action):
     row, col = agent.state
@@ -103,17 +128,8 @@ def update_agent(agent, action):
 
 # 不同的数字表示的方位
 def getChinesefromNum(action):
-    res = ""
-    if action == 0:  # 上
-        res = "上"
-    elif action == 1:  # 下
-        res = "下"
-    elif action == 2:  # 左
-        res = "左"
-    else:  # 右
-        res = "右"
-    return res
-
+    action_dict = {0: "上", 1: "下", 2: "左", 3: "右"}
+    return action_dict.get(action, "")
 
 # 运行AI智能体在迷宫中的最优路径
 def run_maze(agent):
@@ -125,13 +141,12 @@ def run_maze(agent):
         action = np.argmax(
             Q_table[agent.state[0], agent.state[1], :])  # 根据Q值表选择最优动作
         new_state = update_agent(agent, action)
-        draw_maze()
-        draw_agent(agent)
+        show_all()
         pygame.display.flip()
         time.sleep(0.5)
         agent.update_state(new_state)
-    draw_maze()
-    draw_agent(agent)
+    # 结束了之后最后画一次
+    show_all()
     time.sleep(0.5)
 
 
@@ -153,7 +168,9 @@ def q_learning(agent, num_episodes, epsilon, learning_rate, discount_factor):
             path.append(getChinesefromNum(action))
 
             # 如果设置成-5，那么相比撞墙，他不会选择绕路绕5格以上的路（惩罚5以上）。
-            reward = -1 if maze[new_state] == 0 else -5  # 根据新状态更新奖励
+            # reward = -1 if maze[new_state] == 0 else -5  # 根据新状态更新奖励
+
+            reward = -1 if maze[new_state] == 0 else -100  # 根据新状态更新奖励
 
             # 陷入局部最优
             # distance_to_goal = abs(new_state[0] - (maze_height - 1)) + abs(new_state[1] - (maze_width - 1))
@@ -192,3 +209,4 @@ run_maze(agent)
 
 # 关闭Pygame
 pygame.quit()
+
