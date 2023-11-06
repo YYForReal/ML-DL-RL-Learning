@@ -1,0 +1,33 @@
+2023-10-24 18:26:17,347 INFO    MainThread:85168 [wandb_setup.py:_flush():76] Current SDK version is 0.15.12
+2023-10-24 18:26:17,348 INFO    MainThread:85168 [wandb_setup.py:_flush():76] Configure stats pid to 85168
+2023-10-24 18:26:17,348 INFO    MainThread:85168 [wandb_setup.py:_flush():76] Loading settings from C:\Users\Administrator\.config\wandb\settings
+2023-10-24 18:26:17,348 INFO    MainThread:85168 [wandb_setup.py:_flush():76] Loading settings from E:\code\ML-DL-RL-Learning\DL-Learning\wandb\settings
+2023-10-24 18:26:17,348 INFO    MainThread:85168 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2023-10-24 18:26:17,348 INFO    MainThread:85168 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2023-10-24 18:26:17,348 INFO    MainThread:85168 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'DL-Learning\\index.py', 'program_abspath': 'E:\\code\\ML-DL-RL-Learning\\DL-Learning\\index.py', 'program': 'E:\\code\\ML-DL-RL-Learning\\DL-Learning\\index.py'}
+2023-10-24 18:26:17,348 INFO    MainThread:85168 [wandb_init.py:_log_setup():528] Logging user logs to E:\code\ML-DL-RL-Learning\DL-Learning\wandb\run-20231024_182617-o6jdcief\logs\debug.log
+2023-10-24 18:26:17,349 INFO    MainThread:85168 [wandb_init.py:_log_setup():529] Logging internal logs to E:\code\ML-DL-RL-Learning\DL-Learning\wandb\run-20231024_182617-o6jdcief\logs\debug-internal.log
+2023-10-24 18:26:17,349 INFO    MainThread:85168 [wandb_init.py:init():568] calling init triggers
+2023-10-24 18:26:17,349 INFO    MainThread:85168 [wandb_init.py:init():575] wandb.init called with sweep_config: {}
+config: {'learning_rate': 0.02, 'architecture': 'CNN', 'dataset': 'CIFAR-100', 'epochs': 10}
+2023-10-24 18:26:17,349 INFO    MainThread:85168 [wandb_init.py:init():618] starting backend
+2023-10-24 18:26:17,349 INFO    MainThread:85168 [wandb_init.py:init():622] setting up manager
+2023-10-24 18:26:17,350 INFO    MainThread:85168 [backend.py:_multiprocessing_setup():105] multiprocessing start_methods=spawn, using: spawn
+2023-10-24 18:26:17,387 INFO    MainThread:85168 [wandb_init.py:init():628] backend started and connected
+2023-10-24 18:26:17,414 INFO    MainThread:85168 [wandb_init.py:init():720] updated telemetry
+2023-10-24 18:26:17,445 INFO    MainThread:85168 [wandb_init.py:init():753] communicating run to backend with 90.0 second timeout
+2023-10-24 18:26:19,066 INFO    MainThread:85168 [wandb_run.py:_on_init():2220] communicating current version
+2023-10-24 18:26:22,226 INFO    MainThread:85168 [wandb_run.py:_on_init():2229] got version response 
+2023-10-24 18:26:22,226 INFO    MainThread:85168 [wandb_init.py:init():804] starting run threads in backend
+2023-10-24 18:26:27,090 INFO    MainThread:85168 [wandb_run.py:_console_start():2199] atexit reg
+2023-10-24 18:26:27,090 INFO    MainThread:85168 [wandb_run.py:_redirect():2054] redirect: wrap_raw
+2023-10-24 18:26:27,090 INFO    MainThread:85168 [wandb_run.py:_redirect():2119] Wrapping output streams.
+2023-10-24 18:26:27,090 INFO    MainThread:85168 [wandb_run.py:_redirect():2144] Redirects installed.
+2023-10-24 18:26:27,090 INFO    MainThread:85168 [wandb_init.py:init():845] run started, returning control to user process
+2023-10-24 18:26:27,092 INFO    MainThread:85168 [wandb_run.py:_finish():1934] finishing run szu-friends/my-awesome-project/o6jdcief
+2023-10-24 18:26:27,092 INFO    MainThread:85168 [wandb_run.py:_atexit_cleanup():2168] got exitcode: 0
+2023-10-24 18:26:27,092 INFO    MainThread:85168 [wandb_run.py:_restore():2151] restore
+2023-10-24 18:26:27,092 INFO    MainThread:85168 [wandb_run.py:_restore():2157] restore done
+2023-10-24 18:27:06,893 INFO    MainThread:85168 [wandb_run.py:_footer_history_summary_info():3599] rendering history
+2023-10-24 18:27:06,893 INFO    MainThread:85168 [wandb_run.py:_footer_history_summary_info():3631] rendering summary
+2023-10-24 18:27:06,899 INFO    MainThread:85168 [wandb_run.py:_footer_sync_info():3558] logging synced files
