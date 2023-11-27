@@ -2,3 +2,5 @@ data/*
 *.pkl
 *.pyc
 __pycache__
+
+wandb/*
