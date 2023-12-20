@@ -1,0 +1,749 @@
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.618
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [42, 617, 1, 330, 10]
+SARSA Agent - Win Rate over 1000 episodes: 0.623
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [48, 621, 2, 316, 13]
+QLearning Agent - Win Rate over 1000 episodes: 0.568
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [80, 566, 2, 338, 14]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.646
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [26, 645, 1, 325, 3]
+SARSA Agent - Win Rate over 1000 episodes: 0.652
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [37, 648, 4, 298, 13]
+QLearning Agent - Win Rate over 1000 episodes: 0.667
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [54, 664, 3, 266, 13]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.686
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [12, 684, 2, 296, 6]
+SARSA Agent - Win Rate over 1000 episodes: 0.653
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [24, 644, 9, 308, 15]
+QLearning Agent - Win Rate over 1000 episodes: 0.661
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [33, 658, 3, 301, 5]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.656
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [15, 656, 0, 328, 1]
+SARSA Agent - Win Rate over 1000 episodes: 0.627
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [43, 624, 3, 318, 12]
+QLearning Agent - Win Rate over 1000 episodes: 0.632
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [30, 627, 5, 330, 8]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.662
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [13, 662, 0, 325, 0]
+SARSA Agent - Win Rate over 1000 episodes: 0.636
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [42, 631, 5, 314, 8]
+QLearning Agent - Win Rate over 1000 episodes: 0.657
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [34, 652, 5, 286, 23]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.633
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [4, 633, 0, 355, 8]
+SARSA Agent - Win Rate over 1000 episodes: 0.633
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [29, 626, 7, 328, 10]
+QLearning Agent - Win Rate over 1000 episodes: 0.648
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [30, 642, 6, 311, 11]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.66
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [7, 659, 1, 326, 7]
+SARSA Agent - Win Rate over 1000 episodes: 0.657
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [36, 652, 5, 296, 11]
+QLearning Agent - Win Rate over 1000 episodes: 0.639
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [23, 635, 4, 332, 6]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.658
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [3, 656, 2, 336, 3]
+SARSA Agent - Win Rate over 1000 episodes: 0.646
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [40, 642, 4, 294, 20]
+QLearning Agent - Win Rate over 1000 episodes: 0.642
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [38, 636, 6, 306, 14]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.656
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [4, 652, 4, 336, 4]
+SARSA Agent - Win Rate over 1000 episodes: 0.664
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [37, 659, 5, 283, 16]
+QLearning Agent - Win Rate over 1000 episodes: 0.629
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [48, 621, 8, 308, 15]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.621
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [3, 619, 2, 371, 5]
+SARSA Agent - Win Rate over 1000 episodes: 0.633
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [44, 625, 8, 306, 17]
+QLearning Agent - Win Rate over 1000 episodes: 0.65
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [23, 642, 8, 312, 15]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.657
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [5, 657, 0, 334, 4]
+SARSA Agent - Win Rate over 1000 episodes: 0.619
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [43, 615, 4, 325, 13]
+QLearning Agent - Win Rate over 1000 episodes: 0.657
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [19, 651, 6, 304, 20]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.635
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [5, 633, 2, 355, 5]
+SARSA Agent - Win Rate over 1000 episodes: 0.631
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [37, 627, 4, 324, 8]
+QLearning Agent - Win Rate over 1000 episodes: 0.654
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [22, 651, 3, 309, 15]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.688
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [2, 688, 0, 306, 4]
+SARSA Agent - Win Rate over 1000 episodes: 0.647
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [38, 639, 8, 307, 8]
+QLearning Agent - Win Rate over 1000 episodes: 0.674
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [24, 668, 6, 291, 11]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.666
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [2, 665, 1, 327, 5]
+SARSA Agent - Win Rate over 1000 episodes: 0.637
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [42, 629, 8, 308, 13]
+QLearning Agent - Win Rate over 1000 episodes: 0.658
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [30, 657, 1, 301, 11]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.641
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [1, 639, 2, 354, 4]
+SARSA Agent - Win Rate over 1000 episodes: 0.669
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [17, 664, 5, 303, 11]
+QLearning Agent - Win Rate over 1000 episodes: 0.639
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [38, 633, 6, 308, 15]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.663
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [3, 662, 1, 329, 5]
+SARSA Agent - Win Rate over 1000 episodes: 0.651
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [11, 647, 4, 327, 11]
+QLearning Agent - Win Rate over 1000 episodes: 0.661
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [40, 649, 12, 288, 11]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.638
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 638, 0, 359, 3]
+SARSA Agent - Win Rate over 1000 episodes: 0.646
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [10, 644, 2, 331, 13]
+QLearning Agent - Win Rate over 1000 episodes: 0.654
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [23, 649, 5, 312, 11]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.687
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [5, 686, 1, 305, 3]
+SARSA Agent - Win Rate over 1000 episodes: 0.637
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [23, 632, 5, 323, 17]
+QLearning Agent - Win Rate over 1000 episodes: 0.656
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [34, 650, 6, 301, 9]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.655
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [1, 655, 0, 338, 6]
+SARSA Agent - Win Rate over 1000 episodes: 0.649
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [26, 639, 10, 312, 13]
+QLearning Agent - Win Rate over 1000 episodes: 0.653
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [22, 650, 3, 311, 14]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.661
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 661, 0, 335, 4]
+SARSA Agent - Win Rate over 1000 episodes: 0.651
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [25, 644, 7, 311, 13]
+QLearning Agent - Win Rate over 1000 episodes: 0.646
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [30, 642, 4, 314, 10]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.651
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [1, 651, 0, 345, 3]
+SARSA Agent - Win Rate over 1000 episodes: 0.657
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [31, 653, 4, 300, 12]
+QLearning Agent - Win Rate over 1000 episodes: 0.646
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [35, 639, 7, 305, 14]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.672
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [2, 670, 2, 321, 5]
+SARSA Agent - Win Rate over 1000 episodes: 0.63
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [28, 625, 5, 330, 12]
+QLearning Agent - Win Rate over 1000 episodes: 0.663
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [28, 657, 6, 302, 7]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.665
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [2, 665, 0, 330, 3]
+SARSA Agent - Win Rate over 1000 episodes: 0.62
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [27, 615, 5, 342, 11]
+QLearning Agent - Win Rate over 1000 episodes: 0.673
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [13, 667, 6, 302, 12]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.656
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 655, 1, 340, 4]
+SARSA Agent - Win Rate over 1000 episodes: 0.652
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [40, 645, 7, 297, 11]
+QLearning Agent - Win Rate over 1000 episodes: 0.651
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [20, 646, 5, 313, 16]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.661
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [2, 661, 0, 335, 2]
+SARSA Agent - Win Rate over 1000 episodes: 0.632
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [42, 629, 3, 306, 20]
+QLearning Agent - Win Rate over 1000 episodes: 0.638
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [18, 636, 2, 332, 12]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.664
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 663, 1, 329, 7]
+SARSA Agent - Win Rate over 1000 episodes: 0.649
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [32, 644, 5, 306, 13]
+QLearning Agent - Win Rate over 1000 episodes: 0.631
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [46, 624, 7, 315, 8]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.633
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [2, 632, 1, 365, 0]
+SARSA Agent - Win Rate over 1000 episodes: 0.642
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [38, 637, 5, 298, 22]
+QLearning Agent - Win Rate over 1000 episodes: 0.648
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [35, 645, 3, 303, 14]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.66
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [1, 659, 1, 335, 4]
+SARSA Agent - Win Rate over 1000 episodes: 0.643
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [62, 634, 9, 281, 14]
+QLearning Agent - Win Rate over 1000 episodes: 0.651
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [33, 644, 7, 304, 12]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.662
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 661, 1, 336, 2]
+SARSA Agent - Win Rate over 1000 episodes: 0.671
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [22, 659, 12, 284, 23]
+QLearning Agent - Win Rate over 1000 episodes: 0.621
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [44, 612, 9, 317, 18]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.669
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [1, 669, 0, 328, 2]
+SARSA Agent - Win Rate over 1000 episodes: 0.635
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [37, 626, 9, 312, 16]
+QLearning Agent - Win Rate over 1000 episodes: 0.656
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [34, 653, 3, 291, 19]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.647
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 647, 0, 351, 2]
+SARSA Agent - Win Rate over 1000 episodes: 0.683
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [40, 677, 6, 265, 12]
+QLearning Agent - Win Rate over 1000 episodes: 0.63
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [60, 622, 8, 295, 15]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.656
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [1, 655, 1, 338, 5]
+SARSA Agent - Win Rate over 1000 episodes: 0.639
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [39, 630, 9, 310, 12]
+QLearning Agent - Win Rate over 1000 episodes: 0.623
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [51, 618, 5, 311, 15]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.668
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 667, 1, 327, 5]
+SARSA Agent - Win Rate over 1000 episodes: 0.63
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [55, 621, 9, 294, 21]
+QLearning Agent - Win Rate over 1000 episodes: 0.652
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [41, 646, 6, 286, 21]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.651
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 651, 0, 347, 2]
+SARSA Agent - Win Rate over 1000 episodes: 0.66
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [34, 650, 10, 287, 19]
+QLearning Agent - Win Rate over 1000 episodes: 0.662
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [49, 656, 6, 276, 13]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.642
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 642, 0, 355, 3]
+SARSA Agent - Win Rate over 1000 episodes: 0.625
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [55, 618, 7, 305, 15]
+QLearning Agent - Win Rate over 1000 episodes: 0.626
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [48, 619, 7, 312, 14]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.623
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 623, 0, 372, 5]
+SARSA Agent - Win Rate over 1000 episodes: 0.628
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [40, 626, 2, 321, 11]
+QLearning Agent - Win Rate over 1000 episodes: 0.661
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [48, 654, 7, 282, 9]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.652
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 652, 0, 347, 1]
+SARSA Agent - Win Rate over 1000 episodes: 0.623
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [48, 621, 2, 311, 18]
+QLearning Agent - Win Rate over 1000 episodes: 0.634
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [42, 626, 8, 308, 16]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.635
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 634, 1, 363, 2]
+SARSA Agent - Win Rate over 1000 episodes: 0.625
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [42, 621, 4, 318, 15]
+QLearning Agent - Win Rate over 1000 episodes: 0.64
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [43, 635, 5, 310, 7]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.682
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 682, 0, 316, 2]
+SARSA Agent - Win Rate over 1000 episodes: 0.646
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [24, 642, 4, 323, 7]
+QLearning Agent - Win Rate over 1000 episodes: 0.647
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [43, 640, 7, 294, 16]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.661
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 660, 1, 337, 2]
+SARSA Agent - Win Rate over 1000 episodes: 0.638
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [40, 628, 10, 311, 11]
+QLearning Agent - Win Rate over 1000 episodes: 0.647
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [54, 643, 4, 287, 12]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.664
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 664, 0, 336, 0]
+SARSA Agent - Win Rate over 1000 episodes: 0.61
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [43, 603, 7, 334, 13]
+QLearning Agent - Win Rate over 1000 episodes: 0.637
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [28, 630, 7, 322, 13]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.654
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 653, 1, 342, 4]
+SARSA Agent - Win Rate over 1000 episodes: 0.658
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [22, 650, 8, 310, 10]
+QLearning Agent - Win Rate over 1000 episodes: 0.646
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [24, 640, 6, 312, 18]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.678
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 678, 0, 316, 6]
+SARSA Agent - Win Rate over 1000 episodes: 0.636
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [26, 632, 4, 322, 16]
+QLearning Agent - Win Rate over 1000 episodes: 0.613
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [57, 608, 5, 313, 17]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.638
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 637, 1, 358, 4]
+SARSA Agent - Win Rate over 1000 episodes: 0.684
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [29, 680, 4, 280, 7]
+QLearning Agent - Win Rate over 1000 episodes: 0.63
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [66, 622, 8, 281, 23]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.646
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 645, 1, 351, 3]
+SARSA Agent - Win Rate over 1000 episodes: 0.648
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [24, 645, 3, 314, 14]
+QLearning Agent - Win Rate over 1000 episodes: 0.662
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [49, 658, 4, 279, 10]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.664
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [4, 664, 0, 329, 3]
+SARSA Agent - Win Rate over 1000 episodes: 0.631
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [27, 626, 5, 336, 6]
+QLearning Agent - Win Rate over 1000 episodes: 0.638
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [43, 634, 4, 302, 17]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.658
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [1, 658, 0, 338, 3]
+SARSA Agent - Win Rate over 1000 episodes: 0.631
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [41, 626, 5, 317, 11]
+QLearning Agent - Win Rate over 1000 episodes: 0.639
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [50, 633, 6, 298, 13]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.651
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [1, 650, 1, 343, 5]
+SARSA Agent - Win Rate over 1000 episodes: 0.642
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [28, 638, 4, 317, 13]
+QLearning Agent - Win Rate over 1000 episodes: 0.641
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [35, 636, 5, 306, 18]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.659
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 655, 4, 338, 3]
+SARSA Agent - Win Rate over 1000 episodes: 0.644
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [23, 640, 4, 317, 16]
+QLearning Agent - Win Rate over 1000 episodes: 0.643
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [19, 639, 4, 320, 18]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.674
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [2, 674, 0, 321, 3]
+SARSA Agent - Win Rate over 1000 episodes: 0.661
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [43, 657, 4, 284, 12]
+QLearning Agent - Win Rate over 1000 episodes: 0.67
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [15, 661, 9, 301, 14]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.637
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 637, 0, 360, 3]
+SARSA Agent - Win Rate over 1000 episodes: 0.668
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [32, 663, 5, 287, 13]
+QLearning Agent - Win Rate over 1000 episodes: 0.666
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [14, 661, 5, 310, 10]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.666
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 666, 0, 331, 3]
+SARSA Agent - Win Rate over 1000 episodes: 0.657
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [4, 655, 2, 329, 10]
+QLearning Agent - Win Rate over 1000 episodes: 0.624
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [36, 617, 7, 327, 13]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.695
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 695, 0, 303, 2]
+SARSA Agent - Win Rate over 1000 episodes: 0.637
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [40, 632, 5, 303, 20]
+QLearning Agent - Win Rate over 1000 episodes: 0.618
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [31, 612, 6, 340, 11]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.65
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 650, 0, 348, 2]
+SARSA Agent - Win Rate over 1000 episodes: 0.607
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [35, 600, 7, 348, 10]
+QLearning Agent - Win Rate over 1000 episodes: 0.648
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [45, 646, 2, 289, 18]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.662
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 661, 1, 335, 3]
+SARSA Agent - Win Rate over 1000 episodes: 0.67
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [15, 661, 9, 300, 15]
+QLearning Agent - Win Rate over 1000 episodes: 0.645
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [25, 638, 7, 326, 4]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.676
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 676, 0, 322, 2]
+SARSA Agent - Win Rate over 1000 episodes: 0.634
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [24, 630, 4, 332, 10]
+QLearning Agent - Win Rate over 1000 episodes: 0.625
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [41, 623, 2, 321, 13]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.667
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 666, 1, 330, 3]
+SARSA Agent - Win Rate over 1000 episodes: 0.64
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [25, 638, 2, 325, 10]
+QLearning Agent - Win Rate over 1000 episodes: 0.628
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [39, 622, 6, 318, 15]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.673
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 673, 0, 326, 1]
+SARSA Agent - Win Rate over 1000 episodes: 0.614
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [21, 610, 4, 352, 13]
+QLearning Agent - Win Rate over 1000 episodes: 0.615
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [20, 612, 3, 348, 17]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.662
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 661, 1, 336, 2]
+SARSA Agent - Win Rate over 1000 episodes: 0.621
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [44, 613, 8, 309, 26]
+QLearning Agent - Win Rate over 1000 episodes: 0.635
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [29, 630, 5, 319, 17]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.655
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 654, 1, 342, 3]
+SARSA Agent - Win Rate over 1000 episodes: 0.634
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [18, 627, 7, 338, 10]
+QLearning Agent - Win Rate over 1000 episodes: 0.671
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [31, 664, 7, 283, 15]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.669
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 669, 0, 328, 3]
+SARSA Agent - Win Rate over 1000 episodes: 0.655
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [31, 646, 9, 300, 14]
+QLearning Agent - Win Rate over 1000 episodes: 0.647
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [22, 645, 2, 319, 12]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.68
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 680, 0, 315, 5]
+SARSA Agent - Win Rate over 1000 episodes: 0.644
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [36, 635, 9, 308, 12]
+QLearning Agent - Win Rate over 1000 episodes: 0.666
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [31, 657, 9, 285, 18]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.668
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 668, 0, 330, 2]
+SARSA Agent - Win Rate over 1000 episodes: 0.613
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [31, 609, 4, 340, 16]
+QLearning Agent - Win Rate over 1000 episodes: 0.645
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [19, 641, 4, 325, 11]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.668
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 667, 1, 328, 4]
+SARSA Agent - Win Rate over 1000 episodes: 0.643
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [19, 637, 6, 327, 11]
+QLearning Agent - Win Rate over 1000 episodes: 0.663
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [22, 659, 4, 302, 13]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.645
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 644, 1, 353, 2]
+SARSA Agent - Win Rate over 1000 episodes: 0.649
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [23, 645, 4, 313, 15]
+QLearning Agent - Win Rate over 1000 episodes: 0.65
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [30, 645, 5, 302, 18]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.619
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 619, 0, 378, 3]
+SARSA Agent - Win Rate over 1000 episodes: 0.676
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [18, 672, 4, 291, 15]
+QLearning Agent - Win Rate over 1000 episodes: 0.638
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [35, 633, 5, 320, 7]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.672
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 672, 0, 326, 2]
+SARSA Agent - Win Rate over 1000 episodes: 0.653
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [32, 640, 13, 299, 16]
+QLearning Agent - Win Rate over 1000 episodes: 0.652
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [15, 648, 4, 319, 14]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.644
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 644, 0, 352, 4]
+SARSA Agent - Win Rate over 1000 episodes: 0.67
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [39, 658, 12, 278, 13]
+QLearning Agent - Win Rate over 1000 episodes: 0.641
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [29, 637, 4, 317, 13]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.638
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 638, 0, 360, 2]
+SARSA Agent - Win Rate over 1000 episodes: 0.619
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [37, 615, 4, 333, 11]
+QLearning Agent - Win Rate over 1000 episodes: 0.646
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [27, 642, 4, 314, 13]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.671
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 671, 0, 327, 2]
+SARSA Agent - Win Rate over 1000 episodes: 0.624
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [51, 622, 2, 313, 12]
+QLearning Agent - Win Rate over 1000 episodes: 0.632
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [46, 622, 10, 305, 17]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.649
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 649, 0, 349, 2]
+SARSA Agent - Win Rate over 1000 episodes: 0.622
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [30, 614, 8, 334, 14]
+QLearning Agent - Win Rate over 1000 episodes: 0.623
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [58, 614, 9, 300, 19]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.642
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 642, 0, 353, 5]
+SARSA Agent - Win Rate over 1000 episodes: 0.624
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [50, 618, 6, 317, 9]
+QLearning Agent - Win Rate over 1000 episodes: 0.611
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [47, 606, 5, 326, 16]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.645
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 643, 2, 353, 2]
+SARSA Agent - Win Rate over 1000 episodes: 0.643
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [46, 633, 10, 299, 12]
+QLearning Agent - Win Rate over 1000 episodes: 0.63
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [25, 625, 5, 331, 14]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.617
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 617, 0, 381, 2]
+SARSA Agent - Win Rate over 1000 episodes: 0.597
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [57, 593, 4, 328, 18]
+QLearning Agent - Win Rate over 1000 episodes: 0.633
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [23, 625, 8, 333, 11]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.672
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 672, 0, 325, 3]
+SARSA Agent - Win Rate over 1000 episodes: 0.613
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [42, 608, 5, 329, 16]
+QLearning Agent - Win Rate over 1000 episodes: 0.655
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [28, 649, 6, 296, 21]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.667
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 667, 0, 330, 3]
+SARSA Agent - Win Rate over 1000 episodes: 0.644
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [23, 640, 4, 321, 12]
+QLearning Agent - Win Rate over 1000 episodes: 0.671
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [30, 668, 3, 285, 14]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.658
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 657, 1, 338, 4]
+SARSA Agent - Win Rate over 1000 episodes: 0.644
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [31, 641, 3, 313, 12]
+QLearning Agent - Win Rate over 1000 episodes: 0.638
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [8, 631, 7, 341, 13]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.644
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 643, 1, 355, 1]
+SARSA Agent - Win Rate over 1000 episodes: 0.625
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [39, 624, 1, 316, 20]
+QLearning Agent - Win Rate over 1000 episodes: 0.659
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [27, 653, 6, 300, 14]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.653
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 652, 1, 345, 2]
+SARSA Agent - Win Rate over 1000 episodes: 0.652
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [40, 644, 8, 294, 14]
+QLearning Agent - Win Rate over 1000 episodes: 0.643
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [35, 640, 3, 312, 10]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.668
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 668, 0, 329, 3]
+SARSA Agent - Win Rate over 1000 episodes: 0.647
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [47, 644, 3, 291, 15]
+QLearning Agent - Win Rate over 1000 episodes: 0.66
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [20, 658, 2, 308, 12]
+MonteCarlo Agent - Win Rate over 1000 episodes: 0.639
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [0, 639, 0, 357, 4]
+SARSA Agent - Win Rate over 1000 episodes: 0.619
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [42, 615, 4, 327, 12]
+QLearning Agent - Win Rate over 1000 episodes: 0.632
+env.result_counts_description: ['玩家爆牌', '庄家爆牌', '玩家>庄家', '庄家>玩家', '平局']
+env.result_counts: [43, 626, 6, 304, 21]
+Traceback (most recent call last):
+  File "E:\code\ML-DL-RL-Learning\RL-Learning\MC_TD_S21\main.py", line 88, in <module>
+    main()
+  File "E:\code\ML-DL-RL-Learning\RL-Learning\MC_TD_S21\main.py", line 44, in main
+    mc_agent.train(num_episodes=1000, canshow=False)
+  File "E:\code\ML-DL-RL-Learning\RL-Learning\MC_TD_S21\agent.py", line 118, in train
+    next_state, reward, is_game_over = self.env.step(action)
+                                       ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\code\ML-DL-RL-Learning\RL-Learning\MC_TD_S21\env.py", line 77, in step
+    return self.get_state(), self.reward, self.is_game_over
+           ^^^^^^^^^^^^^^^^
+  File "E:\code\ML-DL-RL-Learning\RL-Learning\MC_TD_S21\env.py", line 105, in get_state
+    state.player_num = self.get_cards_sum(self.player_cards)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\code\ML-DL-RL-Learning\RL-Learning\MC_TD_S21\env.py", line 99, in get_cards_sum
+    cards_sum = sum(card['value']
+                ^^^^^^^^^^^^^^^^^
+  File "E:\code\ML-DL-RL-Learning\RL-Learning\MC_TD_S21\env.py", line 99, in <genexpr>
+    cards_sum = sum(card['value']
+KeyboardInterrupt

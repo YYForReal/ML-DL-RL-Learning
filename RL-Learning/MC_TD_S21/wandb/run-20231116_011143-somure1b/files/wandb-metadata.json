@@ -1,0 +1,45 @@
+{
+    "os": "Windows-10-10.0.22621-SP0",
+    "python": "3.11.5",
+    "heartbeatAt": "2023-11-15T17:11:45.290402",
+    "startedAt": "2023-11-15T17:11:43.432078",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "E:\\code\\ML-DL-RL-Learning\\RL-Learning\\MC_TD_S21\\main.py",
+    "codePathLocal": "main.py",
+    "codePath": "RL-Learning\\MC_TD_S21\\main.py",
+    "git": {
+        "remote": "https://github.com/YYForReal/ML-DL-RL-Learning.git",
+        "commit": "db403f2f2f7353d3138384fb9b19a780cbdc4c5c"
+    },
+    "email": "2572082773@qq.com",
+    "root": "E:/code/ML-DL-RL-Learning",
+    "host": "YYForReal",
+    "username": "Administrator",
+    "executable": "D:\\ProgramData\\miniconda3\\envs\\py311\\python.exe",
+    "cpu_count": 12,
+    "cpu_count_logical": 20,
+    "cpu_freq": {
+        "current": 2100.0,
+        "min": 0.0,
+        "max": 2100.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2100.0,
+            "min": 0.0,
+            "max": 2100.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 500.00097274780273,
+            "used": 103.48593521118164
+        }
+    },
+    "memory": {
+        "total": 15.696022033691406
+    }
+}

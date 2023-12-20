@@ -1,0 +1,1 @@
+{"mc_agent win_rate": 0.645, "sarsa_agent win_rate": 0.654, "qlearning_agent win_rate": 0.621, "mse_sarsa_vs_mc": 21.02918683543279, "mse_sarsa_vs_qlearning": 21.11762500991407, "mse_qlearning_vs_mc": 19.816804675588386, "_timestamp": 1700068537.818047, "_runtime": 25.29329800605774, "_step": 99, "_wandb": {"runtime": 19}}
