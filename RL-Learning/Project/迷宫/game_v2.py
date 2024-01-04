@@ -42,6 +42,34 @@ maze = np.array([
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
     [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 0, 1, 1, 1, 0, 8, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1, 1, 1],
+    [1, 0, 1, 0, 0, 1, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+])
+
+
+normal_maze = np.array([
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 1, 0, 0, 1, 0, 0, 0, 1],
+    [1, 0, 1, 0, 1, 0, 0, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
+    [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 0, 1, 1, 1, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1, 1, 1],
+    [1, 0, 1, 0, 0, 1, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+])
+
+
+origin_maze = np.array([
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 1, 0, 0, 1, 0, 0, 0, 1],
+    [1, 0, 1, 0, 1, 0, 0, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
+    [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 0, 1, 1, 1, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 1, 1, 1],
     [1, 0, 1, 0, 0, 1, 0, 0, 0, 1],
@@ -64,6 +92,8 @@ init_position = {"x": 1, "y": 1}
 end_position = {"x": maze_height - 2, "y": maze_width-2}
 
 # AI智能体
+
+
 class Agent:
     def __init__(self, state, actions):
         self.state = state
@@ -78,6 +108,7 @@ class Agent:
     def update_state(self, new_state):
         self.state = new_state
 
+
 # 创建迷宫界面
 def draw_maze():
     for row in range(maze_height):
@@ -86,11 +117,13 @@ def draw_maze():
             pygame.draw.rect(screen, color, (col * cell_size,
                              row * cell_size, cell_size, cell_size))
 
+
 # 在迷宫中绘制AI智能体
 def draw_agent(agent):
     row, col = agent.state
     pygame.draw.circle(screen, (255, 0, 0), (col * cell_size + cell_size //
                        2, row * cell_size + cell_size // 2), cell_size // 3)
+
 
 # 控制台的绘制
 def draw_agent_console(agent):
@@ -99,10 +132,12 @@ def draw_agent_console(agent):
     maze_with_agent[row, col] = 2  # 用数字2表示智能体在迷宫中的位置
     for row in range(maze_height):
         for col in range(maze_width):
-            char = "#" if maze_with_agent[row, col] == 1 else "A" if maze_with_agent[row, col] == 2 else " "
+            char = "#" if maze_with_agent[row,
+                                          col] == 1 else "A" if maze_with_agent[row, col] == 2 else " "
             print(char, end=" ")
         print()
-        
+
+
 def show_all():
     # 展示pygame的
     draw_maze()
@@ -126,13 +161,17 @@ def update_agent(agent, action):
     new_state = (row, col)
     return new_state
 
+
 # 不同的数字表示的方位
 def getChinesefromNum(action):
     action_dict = {0: "上", 1: "下", 2: "左", 3: "右"}
     return action_dict.get(action, "")
 
+
 # 运行AI智能体在迷宫中的最优路径
 def run_maze(agent):
+    maze = normal_maze.copy()
+
     agent.state = (init_position["x"], init_position["y"])  # 初始化智能体的状态为起始点
     screen.fill((0, 0, 0))
     pygame.time.delay(500)
@@ -141,6 +180,10 @@ def run_maze(agent):
         action = np.argmax(
             Q_table[agent.state[0], agent.state[1], :])  # 根据Q值表选择最优动作
         new_state = update_agent(agent, action)
+        if maze[new_state] == 8:
+            print("找到了宝藏！")
+            maze = origin_maze.copy()
+
         show_all()
         pygame.display.flip()
         time.sleep(0.5)
@@ -154,9 +197,12 @@ def run_maze(agent):
 Q_table = np.zeros((maze_height, maze_width, 4))
 
 # Q-Learning算法
+
+
 def q_learning(agent, num_episodes, epsilon, learning_rate, discount_factor):
     global visualize
     for episode in range(num_episodes):
+        maze = normal_maze.copy()
         agent.state = (init_position["x"], init_position["y"])  # 初始化智能体的状态为起始点
         score = 0
         steps = 0
@@ -172,6 +218,10 @@ def q_learning(agent, num_episodes, epsilon, learning_rate, discount_factor):
 
             reward = -1 if maze[new_state] == 0 else -100  # 根据新状态更新奖励
 
+            if maze[new_state] == 8:
+                print("找到了宝藏！")
+                reward = 15 if maze[new_state] == 8 else reward  # 根据新状态更新奖励
+                maze = origin_maze.copy()
             # 陷入局部最优
             # distance_to_goal = abs(new_state[0] - (maze_height - 1)) + abs(new_state[1] - (maze_width - 1))
             # reward = -distance_to_goal if maze[new_state] == 0 else -999999999999999  # 根据新状态更新奖励
@@ -209,4 +259,3 @@ run_maze(agent)
 
 # 关闭Pygame
 pygame.quit()
-
