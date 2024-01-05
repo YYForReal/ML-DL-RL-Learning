@@ -27,7 +27,7 @@ experiment = Experiment(
 # 
 # env = gym.make("ALE/DonkeyKong-v5",render_mode="rgb_array",obs_type="ram")
 env = gym.make(env_name,render_mode="rgb_array",obs_type="ram")
-env = gym.wrappers.RecordVideo(env, f'video-{env_name}')
+env = gym.wrappers.RecordVideo(env, f'video-{env_name}-16')
 env = CometLogger(env, experiment)
 
 

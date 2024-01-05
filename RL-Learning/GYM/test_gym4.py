@@ -1,5 +1,5 @@
 from env import env ,experiment
-from config import MAX_EPISODES,lr_actor,lr_critic,gamma,MAX_STEPS,BATCH_SIZE,env_name
+from config import MAX_EPISODES,lr_actor,lr_critic,gamma,MAX_STEPS,BATCH_SIZE,env_name,target_update
 
 from models import ActorCriticAgent,DQNAgent
 import os
@@ -9,10 +9,10 @@ ACTION_DIM = env.action_space.n
 print(STATE_DIM,ACTION_DIM)
 # agent = ActorCriticAgent(state_dim=STATE_DIM, action_dim=ACTION_DIM, hidden_dim = STATE_DIM * 2,
 #                          lr_actor=lr_actor, lr_critic=lr_critic, gamma=gamma)
-agent = DQNAgent(env=env)
+agent = DQNAgent(env=env,target_update=target_update)
 # 设置加载点，加载模型
 load_points = 0
-load_path = os.path.join(os.path.dirname(__file__), "checkpoints",f"{env_name}-DQNAgent-{load_points}.pt")
+load_path = os.path.join(os.path.dirname(__file__), "checkpoints",f"{env_name}-DQNAgent-{BATCH_SIZE}-{target_update}-{load_points}.pt")
 if os.path.exists(load_path):
     agent.load_model(load_path)
 
@@ -24,7 +24,7 @@ def mini_batch_train(env, agent, max_episodes, max_steps, batch_size):
     for episode in range(max_episodes):
         observation,_ = env.reset()
         episode_reward = 0
-        greedy_eps = max(0.1,greedy_eps*0.999) 
+        greedy_eps = max(0.05,greedy_eps*0.999) 
         agent_loss = None
         for step in range(max_steps):
             # print("observation",observation)
@@ -40,8 +40,6 @@ def mini_batch_train(env, agent, max_episodes, max_steps, batch_size):
             if len(agent.replay_buffer) > batch_size:
                 agent_loss = agent.update(batch_size) 
 
-
-
             if done or step == max_steps-1:
                 episode_rewards.append(episode_reward)
                 break
@@ -50,13 +48,13 @@ def mini_batch_train(env, agent, max_episodes, max_steps, batch_size):
         print(f"Episode {episode}: {episode_rewards[-1]} loss: {agent_loss} greedy_eps {greedy_eps}")
 
         # 使用comet_ml记录
-        experiment.log_metric("loss", agent_loss,epoch=episode)
-        experiment.log_metric("reward", episode_reward,epoch=episode)
+        experiment.log_metric("loss", agent_loss,epoch=episode + load_points)
+        experiment.log_metric("reward", episode_reward,epoch=episode + load_points)
 
-        # 每隔100次迭代保存模型
-        if episode % 100 == 0:
+        # 每隔200次迭代保存模型
+        if episode % 200 == 0:
             # os拼接路径
-            path = os.path.join(os.path.dirname(__file__), 'checkpoints', f'{env_name}-DQNAgent-' + str(episode + load_points) + '.pt')
+            path = os.path.join(os.path.dirname(__file__), 'checkpoints', f'{env_name}-DQNAgent-{BATCH_SIZE}-{target_update}-{episode + load_points}.pt')
             agent.save_model(path)
 
     return episode_rewards

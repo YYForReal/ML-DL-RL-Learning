@@ -1,4 +1,4 @@
-from networks import Actor, Critic, BasicBuffer,ConvDQN,DQN
+from networks import Actor, Critic, BasicBuffer,DQN
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -81,35 +81,31 @@ class ActorCriticAgent(BaseAgent):
 
 class DQNAgent:
 
-    def __init__(self, env, use_conv=False, learning_rate=3e-4, gamma=0.99, tau=0.01, buffer_size=10000):
+    def __init__(self, env, learning_rate=3e-4, gamma=0.99, tau=0.01, buffer_size=10000,target_update = 5):
         self.env = env
         self.learning_rate = learning_rate
         self.gamma = gamma
-        self.tau = tau
+        self.tau = tau 
         self.replay_buffer = BasicBuffer(max_size=buffer_size)
 	
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         state_dim = env.observation_space.shape[0] 
         action_dim = env.action_space.n
 
-        self.use_conv = use_conv
-        if self.use_conv:
-            self.model = ConvDQN(env.observation_space.shape, env.action_space.n).to(self.device)
-            self.target_model = ConvDQN(env.observation_space.shape, env.action_space.n).to(self.device)
-        else:
-            # self.model = DQN(env.observation_space.shape, env.action_space.n).to(self.device)
-            # self.target_model = DQN(env.observation_space.shape, env.action_space.n).to(self.device)
-            self.model = DQN(state_dim, action_dim).to(self.device)
-            self.target_model = DQN(state_dim, action_dim).to(self.device)
-        
+        self.model = DQN(state_dim, action_dim).to(self.device)
+        self.target_model = DQN(state_dim, action_dim).to(self.device)
+        self.target_update = target_update
         # hard copy model parameters to target model parameters
         for target_param, param in zip(self.model.parameters(), self.target_model.parameters()):
             target_param.data.copy_(param)
 
         self.optimizer = torch.optim.Adam(self.model.parameters())
-        
+        self.sample_count = 0 # 采样步数
+
         
     def select_action(self, state, eps=0.20,mask_action_space=None):
+        self.sample_count += 1
+
         state = torch.FloatTensor(state).float().unsqueeze(0).to(self.device)
         qvals = self.model.forward(state)
         action = np.argmax(qvals.cpu().detach().numpy())
@@ -172,20 +168,53 @@ class DQNAgent:
         
         return loss
 
-    def update(self, batch_size):
-        # print("start update",batch_size)
-        batch = self.replay_buffer.sample(batch_size)
-        loss = self.compute_loss(batch)
+    # def update(self, batch_size):
+    #     # print("start update",batch_size)
+    #     batch = self.replay_buffer.sample(batch_size)
+    #     loss = self.compute_loss(batch)
 
-        self.optimizer.zero_grad()
-        loss.backward()
-        self.optimizer.step()
+    #     self.optimizer.zero_grad()
+    #     loss.backward()
+    #     self.optimizer.step()
         
-        # target network update
-        for target_param, param in zip(self.target_model.parameters(), self.model.parameters()):
-            target_param.data.copy_(self.tau * param + (1 - self.tau) * target_param)
+    #     # target network update
+    #     for target_param, param in zip(self.target_model.parameters(), self.model.parameters()):
+    #         target_param.data.copy_(self.tau * param + (1 - self.tau) * target_param)
+
+    #     return loss.item()
+
+    def update(self, batch_size, share_agent=None):
+        # 从经验回放中采样
+        state_batch, action_batch, reward_batch, next_state_batch, done_batch = self.replay_buffer.sample(batch_size)
+
+        # 转换成张量（便于GPU计算）
+        state_batch = torch.tensor(np.array(state_batch), device=self.device, dtype=torch.float) 
+        action_batch = torch.tensor(action_batch, device=self.device).unsqueeze(1) 
+        reward_batch = torch.tensor(reward_batch, device=self.device, dtype=torch.float).unsqueeze(1) 
+        next_state_batch = torch.tensor(np.array(next_state_batch), device=self.device, dtype=torch.float) 
+        done_batch = torch.tensor(np.float32(done_batch), device=self.device).unsqueeze(1) 
+        # 计算 Q 的实际值
+        q_value_batch = self.model(state_batch).gather(dim=1, index=action_batch) # shape(batchsize,1),requires_grad=True
+        # 计算 Q 的估计值，即 r+\gamma Q_max
+        next_max_q_value_batch = self.target_model(next_state_batch).max(1)[0].detach().unsqueeze(1) 
+        expected_q_value_batch = reward_batch + self.gamma * next_max_q_value_batch* (1-done_batch)
+        # 计算损失
+        loss = nn.MSELoss()(q_value_batch, expected_q_value_batch)  
+        # 梯度清零，避免在下一次反向传播时重复累加梯度而出现错误。
+        self.optimizer.zero_grad()  
+        # 反向传播
+        loss.backward()
+        # clip避免梯度爆炸
+        for param in self.model.parameters():  
+            param.grad.data.clamp_(-1, 1)
+        # 更新优化器
+        self.optimizer.step() 
+        # 每C(target_update)步更新目标网络
+        if self.sample_count % self.target_update == 0: 
+            self.target_model.load_state_dict(self.model.state_dict())   
 
         return loss.item()
+
 
     def save_model(self, path):
         if not os.path.exists(os.path.dirname(path)):

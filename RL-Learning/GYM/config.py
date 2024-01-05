@@ -1,4 +1,4 @@
-BATCH_SIZE = 64
+BATCH_SIZE = 16
 MAX_EPISODES = 10000
 MAX_STEPS = 5000
 seed = 12345
@@ -10,6 +10,7 @@ hidden_dim = 128
 # 设置加载点，加载模型
 load_points = 0
 env_name = "ALE/DemonAttack-v5"
+target_update = 4
 
 hyperparameters = {
     "MAX_EPISODES": MAX_EPISODES,
@@ -20,5 +21,6 @@ hyperparameters = {
     "hidden_dim": hidden_dim,
     "BATCH_SIZE":BATCH_SIZE,
     "load_points":load_points,
-    "env_name":env_name
+    "env_name":env_name,
+    "target_update":target_update
 }

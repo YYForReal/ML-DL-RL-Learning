@@ -10,9 +10,10 @@ agent = ActorCriticAgent(state_dim=STATE_DIM, action_dim=ACTION_DIM, hidden_dim 
                          lr_actor=lr_actor, lr_critic=lr_critic, gamma=gamma)
 
 # 设置加载点，加载模型
-load_points = 1700
-load_path = os.path.join(os.path.dirname(__file__), "checkpoints",f"DQNAgent-{load_points}.pt")
-agent.load_model(load_path)
+load_points = 0
+load_path = os.path.join(os.path.dirname(__file__), "checkpoints",f"ActorCritic-{load_points}.pt")
+if os.path.exists(load_path):
+    agent.load_model(load_path)
 
 
 def mini_batch_train(env, agent, max_episodes, max_steps, batch_size):
