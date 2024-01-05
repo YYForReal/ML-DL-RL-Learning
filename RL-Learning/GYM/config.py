@@ -9,6 +9,7 @@ gamma = 0.99
 hidden_dim = 128
 # 设置加载点，加载模型
 load_points = 0
+env_name = "ALE/DemonAttack-v5"
 
 hyperparameters = {
     "MAX_EPISODES": MAX_EPISODES,
@@ -19,4 +20,5 @@ hyperparameters = {
     "hidden_dim": hidden_dim,
     "BATCH_SIZE":BATCH_SIZE,
     "load_points":load_points,
+    "env_name":env_name
 }

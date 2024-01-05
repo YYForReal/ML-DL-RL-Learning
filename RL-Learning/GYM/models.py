@@ -32,10 +32,9 @@ class ActorCriticAgent(BaseAgent):
         self.optimizer_critic = optim.Adam(self.critic.parameters(), lr=lr_critic)
         self.gamma = gamma
 
-    def select_action(self, state):
+    def select_action(self, state, eps=0.20):
         # state 转 np.ndarray
-        state = np.array(state)
-        state = torch.from_numpy(list(state)).float().unsqueeze(0)
+        state = torch.FloatTensor(state).float().unsqueeze(0).to(self.device)
         action_probs = self.actor(state)
         dist = Categorical(action_probs)
         action = dist.sample()
@@ -68,12 +67,14 @@ class ActorCriticAgent(BaseAgent):
 
     def load_model(self, path,epoch=0):
         # 兼容性
-        if os.path.exists(os.path.join(path, 'actor.pth')):
+        if os.path.exists(os.path.join(path, f'actor-{epoch}.pth')):
             self.actor.load_state_dict(torch.load(os.path.join(path, f'actor-{epoch}.pth')))
-        if os.path.exists(os.path.join(path, 'critic.pth')):
+        if os.path.exists(os.path.join(path, f'critic-{epoch}.pth')):
             self.critic.load_state_dict(torch.load(os.path.join(path, f'critic-{epoch}.pth')))
 
     def save_model(self, path,epoch=0):
+        if os.path.exists(path) is False:
+            os.makedirs(path)
         torch.save(self.actor.state_dict(), os.path.join(path, f'actor-{epoch}.pth'))
         torch.save(self.critic.state_dict(), os.path.join(path, f'critic-{epoch}.pth'))
         

@@ -1,7 +1,7 @@
 from comet_ml import Experiment
 from comet_ml.integration.gymnasium import CometLogger
 import gymnasium as gym
-from config import hyperparameters,MAX_EPISODES
+from config import hyperparameters,MAX_EPISODES,env_name
 
 def episode_trigger_func(episode):
     print("choose episode ",episode)
@@ -11,19 +11,23 @@ def episode_trigger_func(episode):
         return True
     return False
 
+# 去除env_name的/,取右边内容
+project_name = env_name.split('/')[-1]
+
 experiment = Experiment(
   api_key="jxCKAgc1LK4bLO9pQIuerERSJ",
-  project_name="rl-gym",
-  workspace="donkeykong"
+  project_name=project_name,
+  workspace="gym"
 )
 
 
-# ALE/DonkeyKong-ram-v5
-# env = gym.make("ALE/DonkeyKong-ram-v5",render_mode="rgb_array",obs_type="ram")
-# env = gym.make('Acrobot-v1', render_mode="rgb_array")
 
-env = gym.make("ALE/DonkeyKong-v5",render_mode="rgb_array",obs_type="ram")
-env = gym.wrappers.RecordVideo(env, '1-5',name_prefix="mask-action")
+
+# env = gym.make('Acrobot-v1', render_mode="rgb_array")
+# 
+# env = gym.make("ALE/DonkeyKong-v5",render_mode="rgb_array",obs_type="ram")
+env = gym.make(env_name,render_mode="rgb_array",obs_type="ram")
+env = gym.wrappers.RecordVideo(env, f'video-{env_name}')
 env = CometLogger(env, experiment)
 
 
