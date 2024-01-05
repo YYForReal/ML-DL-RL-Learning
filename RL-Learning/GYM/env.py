@@ -11,22 +11,20 @@ def episode_trigger_func(episode):
         return True
     return False
 
-
-
 experiment = Experiment(
   api_key="jxCKAgc1LK4bLO9pQIuerERSJ",
   project_name="rl-gym",
-  workspace="yyforreal"
+  workspace="donkeykong"
 )
 
 
-
-
+# ALE/DonkeyKong-ram-v5
+# env = gym.make("ALE/DonkeyKong-ram-v5",render_mode="rgb_array",obs_type="ram")
+# env = gym.make('Acrobot-v1', render_mode="rgb_array")
 
 env = gym.make("ALE/DonkeyKong-v5",render_mode="rgb_array",obs_type="ram")
-# env = gym.make('Acrobot-v1', render_mode="rgb_array")
-# env = gym.wrappers.RecordVideo(env, 'test')
-# env = CometLogger(env, experiment)
+env = gym.wrappers.RecordVideo(env, '1-5',name_prefix="mask-action")
+env = CometLogger(env, experiment)
 
 
 STATE_DIM = env.observation_space.shape[0]

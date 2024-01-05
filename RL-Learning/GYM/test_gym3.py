@@ -1,6 +1,6 @@
 from env import env ,experiment
-from config import MAX_EPISODES,lr_actor,lr_critic,gamma,MAX_STEPS,BATCH_SIZE
-
+from config import MAX_EPISODES,lr_actor,lr_critic,gamma,MAX_STEPS,BATCH_SIZE,load_points
+import numpy as np
 from models import ActorCriticAgent,DQNAgent
 import os
 # 使用cemet_ml
@@ -14,26 +14,26 @@ print(STATE_DIM,ACTION_DIM)
 # agent = ActorCriticAgent(state_dim=STATE_DIM, action_dim=ACTION_DIM, hidden_dim = STATE_DIM * 2,
 #                          lr_actor=lr_actor, lr_critic=lr_critic, gamma=gamma)
 agent = DQNAgent(env=env)
-# 设置加载点，加载模型
-load_points = 1700
-load_path = os.path.join(os.path.dirname(__file__), "checkpoints",f"DQNAgent-{load_points}.pt")
-agent.load_model(load_path)
+load_path = os.path.join(os.path.dirname(__file__), "checkpoints",f"DQNAgent-mask-{load_points}.pt")
+if os.path.exists(load_path):
+    agent.load_model(load_path)
 
 
 def mini_batch_train(env, agent, max_episodes, max_steps, batch_size):
     episode_rewards = []
-    greedy_eps = 0.2
+    greedy_eps = 0.5
 
     for episode in range(max_episodes):
         observation,_ = env.reset()
         episode_reward = 0
-        greedy_eps = max(0.1,greedy_eps*0.999) 
+        greedy_eps = max(0.01,greedy_eps*0.999) 
         agent_loss = None
         for step in range(max_steps):
             # print("observation",observation)
             # print('type obs',type(observation))
+            mask_action_space = np.array( [2,3,4,6,7])
+            action,probs = agent.select_action(observation,eps=greedy_eps,mask_action_space=mask_action_space)
 
-            action,probs = agent.select_action(observation,eps=greedy_eps)
             # next_observation, reward, done, _ = env.step(action)
             next_observation, reward, terminated, truncated, info = env.step(action)
             done = terminated or truncated
@@ -44,7 +44,6 @@ def mini_batch_train(env, agent, max_episodes, max_steps, batch_size):
                 agent_loss = agent.update(batch_size) 
 
 
-
             if done or step == max_steps-1:
                 episode_rewards.append(episode_reward)
                 break
@@ -53,14 +52,15 @@ def mini_batch_train(env, agent, max_episodes, max_steps, batch_size):
         print(f"Episode {episode}: {episode_rewards[-1]} loss: {agent_loss} greedy_eps {greedy_eps}")
 
         # 使用comet_ml记录
-        experiment.log_metric("loss", agent_loss,epoch=episode)
-        experiment.log_metric("reward", episode_reward,epoch=episode)
+        experiment.log_metric("loss", agent_loss,epoch=episode+load_points)
+        experiment.log_metric("reward", episode_reward,epoch=episode+load_points)
 
         # 每隔100次迭代保存模型
         if episode % 100 == 0:
             # os拼接路径
             path = os.path.join(os.path.dirname(__file__), 'checkpoints', 'DQNAgent-' + str(episode + load_points) + '.pt')
             agent.save_model(path)
+            print("save model to ",path)
 
     return episode_rewards
 

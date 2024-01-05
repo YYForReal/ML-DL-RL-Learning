@@ -1,12 +1,9 @@
 pip install moviepy
-pip install cemet_ml
+pip install comet_ml
 pip install gymnasium
 pip install gymnasium[classic-control]
 pip install "gymnasium[atari, accept-rom-license]"
-pip install gymnasium[accept-rom-license]
 pip install atari-py
-
-
 pip install autorom
 AutoROM --accept-license
 

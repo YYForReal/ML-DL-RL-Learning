@@ -108,14 +108,17 @@ class DQNAgent:
         self.optimizer = torch.optim.Adam(self.model.parameters())
         
         
-    def select_action(self, state, eps=0.20):
+    def select_action(self, state, eps=0.20,mask_action_space=None):
         state = torch.FloatTensor(state).float().unsqueeze(0).to(self.device)
         qvals = self.model.forward(state)
         action = np.argmax(qvals.cpu().detach().numpy())
         
-        if(np.random.randn() < eps):
+        if (np.random.randn() < eps):
+            if mask_action_space is not None:
+                # 从mask里面取一个
+                action = np.random.choice(mask_action_space)
+                return action,qvals
             return self.env.action_space.sample(),qvals
-
         return action,qvals
 
     def compute_loss(self, batch):     
@@ -124,7 +127,7 @@ class DQNAgent:
         actions = torch.LongTensor(actions).to(self.device)
         rewards = torch.FloatTensor(rewards).to(self.device)
         next_states = torch.FloatTensor(next_states).to(self.device)
-        dones = torch.FloatTensor(dones)
+        dones = torch.FloatTensor(dones).to(self.device)
 
         # resize tensors
         actions = actions.view(actions.size(0), 1)
@@ -134,7 +137,7 @@ class DQNAgent:
         curr_Q = self.model.forward(states).gather(1, actions)
         next_Q = self.target_model.forward(next_states)
         max_next_Q = torch.max(next_Q, 1)[0]
-        max_next_Q = max_next_Q.view(max_next_Q.size(0), 1)
+        max_next_Q = max_next_Q.view(max_next_Q.size(0), 1).to(self.device)
         expected_Q = rewards + (1 - dones) * self.gamma * max_next_Q
         
         loss = F.mse_loss(curr_Q, expected_Q.detach())
@@ -157,6 +160,8 @@ class DQNAgent:
         return loss.item()
 
     def save_model(self, path):
+        if not os.path.exists(os.path.dirname(path)):
+            os.makedirs(os.path.dirname(path))
         torch.save(self.model.state_dict(), path)
 
     def load_model(self, path):
