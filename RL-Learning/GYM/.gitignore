@@ -2,3 +2,4 @@ test/
 ROMS/
 checkpoints/
 .cometml-runs/
+1-5/*

@@ -112,22 +112,49 @@ class DQNAgent:
         state = torch.FloatTensor(state).float().unsqueeze(0).to(self.device)
         qvals = self.model.forward(state)
         action = np.argmax(qvals.cpu().detach().numpy())
-        
+        # 判定随机
         if (np.random.randn() < eps):
             if mask_action_space is not None:
                 # 从mask里面取一个
                 action = np.random.choice(mask_action_space)
-                return action,qvals
+                return action,qvals            
             return self.env.action_space.sample(),qvals
+        
+        # 判定有无mask
+        # if mask_action_space is not None:
+        #     # print("before ",qvals)
+        #     # TODO 依据qval的价值，从mask [2,3,4,5]里面取一个
+        #     # 将非mask中的动作的价值设为负无穷大，这样它们就不会被选择
+        #     qvals[:, ~np.isin(range(len(qvals[0])), mask_action_space)] = float('-inf')
+        #     # print("after ",qvals)
+        #     # input("----")
+        #     # 根据q价值从mask中选择动作
+        #     # print("self.env.action_space.n",self.env.action_space.n)
+        #     action_probs = torch.softmax(qvals, dim=1).cpu().detach().numpy()
+        #     # print("action_probs",action_probs)
+        #     action = np.random.choice(self.env.action_space.n, p=action_probs.flatten())
+        #     # print("action",action)
+        #     return action,qvals
+
+        
         return action,qvals
 
     def compute_loss(self, batch):     
+        # states, actions, rewards, next_states, dones = batch
+        # states = torch.FloatTensor(states).to(self.device)
+        # actions = torch.LongTensor(actions).to(self.device)
+        # rewards = torch.FloatTensor(rewards).to(self.device)
+        # next_states = torch.FloatTensor(next_states).to(self.device)
+        # dones = torch.FloatTensor(dones).to(self.device)
+
         states, actions, rewards, next_states, dones = batch
-        states = torch.FloatTensor(states).to(self.device)
-        actions = torch.LongTensor(actions).to(self.device)
-        rewards = torch.FloatTensor(rewards).to(self.device)
-        next_states = torch.FloatTensor(next_states).to(self.device)
-        dones = torch.FloatTensor(dones).to(self.device)
+        states = torch.tensor(states, dtype=torch.float32, device=self.device)
+        actions = torch.tensor(actions, dtype=torch.int64, device=self.device)
+        rewards = torch.tensor(rewards, dtype=torch.float32, device=self.device)
+        next_states = torch.tensor(next_states, dtype=torch.float32, device=self.device)
+        dones = torch.tensor(dones, dtype=torch.float32, device=self.device)
+
+
 
         # resize tensors
         actions = actions.view(actions.size(0), 1)
