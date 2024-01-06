@@ -5,3 +5,4 @@ __pycache__
 
 wandb/*
 RL-Learning/GYM/video-ALE/*
+RL-Learning/GYM/comet-config.txt

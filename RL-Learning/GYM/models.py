@@ -55,7 +55,7 @@ class ActorCriticAgent(BaseAgent):
         actions = torch.tensor(actions, dtype=torch.long, device=self.device)
         rewards = torch.tensor(rewards, dtype=torch.float32, device=self.device)
         next_states = torch.tensor(next_states, dtype=torch.float32, device=self.device)
-
+        self.update_times += 1
         if self.update_times % self.n_updates_critic == 0:
             values = self.critic(states).squeeze()
             next_values = self.critic(next_states).squeeze()
@@ -91,7 +91,7 @@ class ActorCriticAgent(BaseAgent):
 
 class DQNAgent:
 
-    def __init__(self, env, learning_rate=3e-4, gamma=0.99, tau=0.01, buffer_size=10000,target_update = 5):
+    def __init__(self, env, learning_rate=3e-4, gamma=0.99, tau=0.01, buffer_size=1000,target_update = 5):
         self.env = env
         self.learning_rate = learning_rate
         self.gamma = gamma

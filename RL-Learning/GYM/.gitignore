@@ -4,3 +4,4 @@ checkpoints/
 .cometml-runs/
 1-5/*
 experiments/*
+comet-config.txt

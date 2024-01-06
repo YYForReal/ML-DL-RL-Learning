@@ -1,4 +1,4 @@
-BATCH_SIZE = 64
+BATCH_SIZE = 128
 MAX_EPISODES = 10001
 MAX_STEPS = 5000
 seed = 12345
@@ -6,11 +6,15 @@ seed = 12345
 lr_actor = 0.001
 lr_critic = 0.005
 gamma = 0.99
-hidden_dim = 128
+hidden_dim = 256
 # 设置加载点，加载模型
 load_points = 0
-env_name = "ALE/DemonAttack-ram-v5"
-target_update = 10
+# env_name = "ALE/DemonAttack-ram-v5"
+# env_name = "ALE/DemonAttack-v5"
+env_name = "ALE/DonkeyKong-v5"
+# env = gym.make("ALE/DonkeyKong-v5",render_mode="rgb_array",obs_type="ram")
+
+target_update = 2
 
 n_updates_critic = 1
 m_updates_actor = 5
