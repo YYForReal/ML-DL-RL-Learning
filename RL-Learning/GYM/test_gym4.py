@@ -4,8 +4,9 @@ from config import MAX_EPISODES,lr_actor,lr_critic,gamma,MAX_STEPS,BATCH_SIZE,en
 from models import ActorCriticAgent,DQNAgent
 import os
 
-STATE_DIM = env.observation_space.shape
+STATE_DIM = env.observation_space.shape[0]
 ACTION_DIM = env.action_space.n
+
 print(STATE_DIM,ACTION_DIM)
 # agent = ActorCriticAgent(state_dim=STATE_DIM, action_dim=ACTION_DIM, hidden_dim = STATE_DIM * 2,
 #                          lr_actor=lr_actor, lr_critic=lr_critic, gamma=gamma)
@@ -52,7 +53,7 @@ def mini_batch_train(env, agent, max_episodes, max_steps, batch_size):
         experiment.log_metric("reward", episode_reward,epoch=episode + load_points)
 
         # 每隔200次迭代保存模型
-        if episode % 200 == 0:
+        if episode % 1000 == 0:
             # os拼接路径
             path = os.path.join(os.path.dirname(__file__), 'checkpoints', f'{env_name}-DQNAgent-{BATCH_SIZE}-{target_update}-{episode + load_points}.pt')
             agent.save_model(path)
