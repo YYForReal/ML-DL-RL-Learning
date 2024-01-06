@@ -17,3 +17,24 @@ gymnasium.error.Error: We're Unable to find the game "DonkeyKong". Note: Gymnasi
 需要下载：http://www.atarimania.com/rom_collection_archive_atari_2600_roms.html
 
 解压缩到同目录下
+
+
+## 实验环境
+
+Solutions to rate limits¶
+If you notice you are hitting rate limits based on normal experiments, try reporting on each epoch, rather than each step.
+
+If you still encounter rate limits, consider using the OfflineExperiment interface. This only requires that you change:
+
+
+experiment = Experiment(...)
+to
+
+
+experiment = OfflineExperiment(..., offline_directory="/path/to/save/experiments")
+After the experiment is complete, you then run:
+
+
+comet upload /path/to/save/experiments/*.zip
+to send your experiment to Comet.
+
