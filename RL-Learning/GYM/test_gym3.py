@@ -26,7 +26,7 @@ def mini_batch_train(env, agent, max_episodes, max_steps, batch_size):
     for episode in range(max_episodes):
         observation,_ = env.reset()
         episode_reward = 0
-        greedy_eps = max(0.01,greedy_eps*0.999) 
+        greedy_eps = max(0.05,greedy_eps*0.999) 
         agent_loss = None
         for step in range(max_steps):
             # print("observation",observation)

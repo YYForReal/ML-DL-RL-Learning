@@ -1,7 +1,7 @@
-from comet_ml import Experiment
+from comet_ml import Experiment, OfflineExperiment
 from comet_ml.integration.gymnasium import CometLogger
 import gymnasium as gym
-from config import hyperparameters,MAX_EPISODES,env_name
+from config import hyperparameters,MAX_EPISODES,env_name,BATCH_SIZE,target_update
 
 def episode_trigger_func(episode):
     print("choose episode ",episode)
@@ -14,10 +14,13 @@ def episode_trigger_func(episode):
 # 去除env_name的/,取右边内容
 project_name = env_name.split('/')[-1]
 
-experiment = Experiment(
+
+# offline_directory="/path/to/save/experiments"
+experiment = OfflineExperiment(
   api_key="jxCKAgc1LK4bLO9pQIuerERSJ",
   project_name=project_name,
-  workspace="gym"
+  workspace="gym",
+  offline_directory="./experiments"
 )
 
 
@@ -27,7 +30,7 @@ experiment = Experiment(
 # 
 # env = gym.make("ALE/DonkeyKong-v5",render_mode="rgb_array",obs_type="ram")
 env = gym.make(env_name,render_mode="rgb_array",obs_type="ram")
-env = gym.wrappers.RecordVideo(env, f'video-{env_name}-16')
+env = gym.wrappers.RecordVideo(env, f'video-{env_name}-{BATCH_SIZE}-{target_update}')
 env = CometLogger(env, experiment)
 
 
