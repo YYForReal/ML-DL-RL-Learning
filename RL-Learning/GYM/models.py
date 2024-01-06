@@ -24,7 +24,8 @@ class BaseAgent:
 
 # 定义Actor-Critic Agent
 class ActorCriticAgent(BaseAgent):
-    def __init__(self, state_dim, action_dim, hidden_dim, lr_actor, lr_critic, gamma, n_updates_critic=1, m_updates_actor=1):
+    def __init__(self, state_dim, action_dim, hidden_dim, lr_actor, lr_critic, gamma, 
+                 n_updates_critic=1, m_updates_actor=1):
         super(ActorCriticAgent, self).__init__()
         self.actor = Actor(state_dim, action_dim, hidden_dim).to(self.device)
         self.critic = Critic(state_dim, hidden_dim).to(self.device)
@@ -35,20 +36,19 @@ class ActorCriticAgent(BaseAgent):
         self.m_updates_actor = m_updates_actor # 每隔m步更新一次actor
         self.update_times = 0 # 记录更新次数
 
-
     def select_action(self, state, eps=0.20):
         state = torch.tensor(state, dtype=torch.float32, device=self.device).unsqueeze(0).to(self.device)
         action_probs = self.actor(state)
         dist = Categorical(action_probs)
         # print("action_probs",action_probs)
         action = dist.sample()
+        return action.item(), dist.log_prob(action)
 
         # eps-greedy
-        if np.random.randn() < eps:
-            return np.random.choice(range(action_probs.shape[1])), dist.log_prob(action)
-        else:    
-            # print("action",action.item())
-            return action.item(), dist.log_prob(action)
+        # if np.random.randn() < eps:
+        #     return np.random.choice(range(action_probs.shape[1])), dist.log_prob(action)
+        # else:    
+        #     # print("action",action.item())
 
     def update(self, states, actions, rewards, next_states, dones):
         states = torch.tensor(states, dtype=torch.float32, device=self.device)
@@ -62,11 +62,6 @@ class ActorCriticAgent(BaseAgent):
         td_errors = rewards + self.gamma * next_values * (1 - dones) - values
 
         if self.update_times % self.n_updates_critic == 0:
-            self.optimizer_critic.zero_grad()
-            critic_loss = td_errors.pow(2).mean()
-            critic_loss.backward()
-            self.optimizer_critic.step()
-
             self.optimizer_critic.zero_grad()
             critic_loss = td_errors.pow(2).mean()
             critic_loss.backward()

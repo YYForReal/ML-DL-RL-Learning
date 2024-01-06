@@ -35,6 +35,23 @@ class Critic(nn.Module):
         x = torch.relu(self.fc2(x))
         return self.fc2(x)
 
+
+class ActorCritic(nn.Module):
+    def __init__(self, state_dim, action_dim):
+        self.fc1 = nn.Linear(state_dim, 256)
+        self.fc2 = nn.Linear(256, 256)
+        self.action_layer = nn.Linear(256, action_dim)
+        self.value_layer = nn.Linear(256, 1)
+    def forward(self, x):
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        logits_p = F.softmax(self.action_layer(x), dim=1)
+        value = self.value_layer(x)
+        return logits_p, value
+
+
+
+
 class ReplayBuffer:
     def __init__(self, max_size):
         self.max_size = max_size
