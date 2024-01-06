@@ -1,4 +1,4 @@
-from networks import Actor, Critic, BasicBuffer,DQN
+from networks import Actor, Critic, ReplayBuffer,DQN,PrioritizedBuffer
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -11,7 +11,7 @@ import os
 # 定义一个通用的Agent类，具有动作选择、加载保存初始模型的功能，供其他agent继承
 class BaseAgent:
     def __init__(self):
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = torch.device("cuda:2" if torch.cuda.is_available() else "cpu")
     
     def select_action(self, state):
         raise NotImplementedError
@@ -55,11 +55,17 @@ class ActorCriticAgent(BaseAgent):
         actions = torch.tensor(actions, dtype=torch.long, device=self.device)
         rewards = torch.tensor(rewards, dtype=torch.float32, device=self.device)
         next_states = torch.tensor(next_states, dtype=torch.float32, device=self.device)
+        self.update_times += 1
+
+        values = self.critic(states).squeeze()
+        next_values = self.critic(next_states).squeeze()
+        td_errors = rewards + self.gamma * next_values * (1 - dones) - values
 
         if self.update_times % self.n_updates_critic == 0:
-            values = self.critic(states).squeeze()
-            next_values = self.critic(next_states).squeeze()
-            td_errors = rewards + self.gamma * next_values * (1 - dones) - values
+            self.optimizer_critic.zero_grad()
+            critic_loss = td_errors.pow(2).mean()
+            critic_loss.backward()
+            self.optimizer_critic.step()
 
             self.optimizer_critic.zero_grad()
             critic_loss = td_errors.pow(2).mean()
@@ -91,21 +97,23 @@ class ActorCriticAgent(BaseAgent):
 
 class DQNAgent:
 
-    def __init__(self, env, learning_rate=3e-4, gamma=0.99, tau=0.01, buffer_size=10000,target_update = 5):
+    def __init__(self, env, learning_rate=3e-4, gamma=0.99, buffer_size=1000000,target_update = 5):
         self.env = env
         self.learning_rate = learning_rate
         self.gamma = gamma
-        self.tau = tau 
-        self.replay_buffer = BasicBuffer(max_size=buffer_size)
-	
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = torch.device("cuda:2" if torch.cuda.is_available() else "cpu")
         state_dim = env.observation_space.shape[0] 
         action_dim = env.action_space.n
 
+        # 经验回放缓冲区
+        self.replay_buffer = ReplayBuffer(max_size=buffer_size)
+        # 当前网络
         self.model = DQN(state_dim, action_dim).to(self.device)
-        self.target_model = DQN(state_dim, action_dim).to(self.device)
-        self.target_update = target_update
-        # hard copy model parameters to target model parameters
+        # 目标网络
+        self.target_model = DQN(state_dim, action_dim).to(self.device) 
+        self.target_update = target_update # 每隔target_update步更新目标网络
+
+        # 将目标网络初始化为当前网络
         for target_param, param in zip(self.model.parameters(), self.target_model.parameters()):
             target_param.data.copy_(param)
 
@@ -122,11 +130,12 @@ class DQNAgent:
         # 判定随机
         if (np.random.randn() < eps):
             if mask_action_space is not None:
-                # 从mask里面取一个
+                # 从mask里面取一个 mask_action_space = np.array( [2,3,4,6,7])
                 action = np.random.choice(mask_action_space)
                 return action,qvals            
             return self.env.action_space.sample(),qvals
         
+        return action,qvals
         # 判定有无mask
         # if mask_action_space is not None:
         #     # print("before ",qvals)
@@ -142,9 +151,7 @@ class DQNAgent:
         #     action = np.random.choice(self.env.action_space.n, p=action_probs.flatten())
         #     # print("action",action)
         #     return action,qvals
-
-        
-        return action,qvals
+        # return action,qvals
 
     def compute_loss(self, batch):     
         # states, actions, rewards, next_states, dones = batch

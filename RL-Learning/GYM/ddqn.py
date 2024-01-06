@@ -9,9 +9,6 @@ import random
 from collections import deque
 
 
-
-
-
 def mini_batch_train(env, agent, max_episodes, max_steps, batch_size):
     episode_rewards = []
 
