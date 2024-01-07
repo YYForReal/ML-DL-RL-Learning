@@ -18,8 +18,14 @@ env_name = "ALE/DemonAttack-ram-v5"
 
 target_update = 10
 
-n_updates_critic = 1
-m_updates_actor = 5
+target_update = 5 # 每隔target步更新一次DQN的目标网络
+buffer_size = 100000
+
+
+n_updates_critic = 1 # 每n步更新一次critic
+m_updates_actor = 4 # 每m步更新一次actor
+
+mode = "AC"
 
 
 
@@ -36,4 +42,6 @@ hyperparameters = {
     "target_update":target_update,
     "m_updates_actor":m_updates_actor,
     "n_updates_critic":n_updates_critic,
+    "buffer_size":buffer_size,
+    "mode":mode
 }

@@ -1,7 +1,7 @@
-from comet_ml import Experiment, OfflineExperiment
+from comet_ml import Experiment, OfflineExperiment 
 from comet_ml.integration.gymnasium import CometLogger
 import gymnasium as gym
-from config import hyperparameters,MAX_EPISODES,env_name,BATCH_SIZE,target_update
+from config import hyperparameters,MAX_EPISODES,env_name,BATCH_SIZE,target_update,mode
 from gymnasium.wrappers import FrameStack,FlattenObservation
 
 def episode_trigger_func(episode):
@@ -18,12 +18,12 @@ def make_env(env_name):
     project_name = env_name.split('/')[-1]
 
     # offline_directory="/path/to/save/experiments"
-    experiment = OfflineExperiment(
-    api_key="jxCKAgc1LK4bLO9pQIuerERSJ",
-    project_name=project_name,
-    workspace="gym",
-    offline_directory="./experiments"
-    )
+    # experiment = OfflineExperiment(
+    # api_key="jxCKAgc1LK4bLO9pQIuerERSJ",
+    # project_name=project_name,
+    # workspace="gym",
+    # offline_directory="./experiments"
+    # )
 
     # env = gym.make('Acrobot-v1', render_mode="rgb_array")
     # 
@@ -31,7 +31,7 @@ def make_env(env_name):
     # env = FrameStack(env, 4) # 堆叠4帧，可以学习到场景的方向,此时维度是(4,128)
     # print("STATE_DIM 2",env.observation_space.shape)
     # env = FlattenObservation(env) # 转为1维的shape 
-    env = gym.wrappers.RecordVideo(env, f'video-{env_name}-{BATCH_SIZE}-{target_update}')
+    env = gym.wrappers.RecordVideo(env, f'video-{project_name}/{mode}-{BATCH_SIZE}-{target_update}')
     # env = CometLogger(env, experiment)
 
 

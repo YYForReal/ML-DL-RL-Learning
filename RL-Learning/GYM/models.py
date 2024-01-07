@@ -1,4 +1,4 @@
-from networks import Actor, Critic, BasicBuffer,DQN
+from networks import Actor, Critic, ReplayBuffer,DQN,PrioritizedBuffer
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -11,7 +11,7 @@ import os
 # 定义一个通用的Agent类，具有动作选择、加载保存初始模型的功能，供其他agent继承
 class BaseAgent:
     def __init__(self):
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = torch.device("cuda:2" if torch.cuda.is_available() else "cpu")
     
     def select_action(self, state):
         raise NotImplementedError
@@ -24,7 +24,8 @@ class BaseAgent:
 
 # 定义Actor-Critic Agent
 class ActorCriticAgent(BaseAgent):
-    def __init__(self, state_dim, action_dim, hidden_dim, lr_actor, lr_critic, gamma, n_updates_critic=1, m_updates_actor=1):
+    def __init__(self, state_dim, action_dim, hidden_dim, lr_actor, lr_critic, gamma, 
+                 n_updates_critic=1, m_updates_actor=1):
         super(ActorCriticAgent, self).__init__()
         self.actor = Actor(state_dim, action_dim, hidden_dim).to(self.device)
         self.critic = Critic(state_dim, hidden_dim).to(self.device)
@@ -35,20 +36,19 @@ class ActorCriticAgent(BaseAgent):
         self.m_updates_actor = m_updates_actor # 每隔m步更新一次actor
         self.update_times = 0 # 记录更新次数
 
-
     def select_action(self, state, eps=0.20):
         state = torch.tensor(state, dtype=torch.float32, device=self.device).unsqueeze(0).to(self.device)
         action_probs = self.actor(state)
         dist = Categorical(action_probs)
         # print("action_probs",action_probs)
         action = dist.sample()
+        return action.item(), dist.log_prob(action)
 
         # eps-greedy
-        if np.random.randn() < eps:
-            return np.random.choice(range(action_probs.shape[1])), dist.log_prob(action)
-        else:    
-            # print("action",action.item())
-            return action.item(), dist.log_prob(action)
+        # if np.random.randn() < eps:
+        #     return np.random.choice(range(action_probs.shape[1])), dist.log_prob(action)
+        # else:    
+        #     # print("action",action.item())
 
     def update(self, states, actions, rewards, next_states, dones):
         states = torch.tensor(states, dtype=torch.float32, device=self.device)
@@ -56,11 +56,12 @@ class ActorCriticAgent(BaseAgent):
         rewards = torch.tensor(rewards, dtype=torch.float32, device=self.device)
         next_states = torch.tensor(next_states, dtype=torch.float32, device=self.device)
         self.update_times += 1
-        if self.update_times % self.n_updates_critic == 0:
-            values = self.critic(states).squeeze()
-            next_values = self.critic(next_states).squeeze()
-            td_errors = rewards + self.gamma * next_values * (1 - dones) - values
 
+        values = self.critic(states).squeeze()
+        next_values = self.critic(next_states).squeeze()
+        td_errors = rewards + self.gamma * next_values * (1 - dones) - values
+
+        if self.update_times % self.n_updates_critic == 0:
             self.optimizer_critic.zero_grad()
             critic_loss = td_errors.pow(2).mean()
             critic_loss.backward()
@@ -91,21 +92,23 @@ class ActorCriticAgent(BaseAgent):
 
 class DQNAgent:
 
-    def __init__(self, env, learning_rate=3e-4, gamma=0.99, tau=0.01, buffer_size=1000,target_update = 5):
+    def __init__(self, env, learning_rate=3e-4, gamma=0.99, buffer_size=1000000,target_update = 5):
         self.env = env
         self.learning_rate = learning_rate
         self.gamma = gamma
-        self.tau = tau 
-        self.replay_buffer = BasicBuffer(max_size=buffer_size)
-	
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         state_dim = env.observation_space.shape[0] 
         action_dim = env.action_space.n
 
+        # 经验回放缓冲区
+        self.replay_buffer = ReplayBuffer(max_size=buffer_size)
+        # 当前网络
         self.model = DQN(state_dim, action_dim).to(self.device)
-        self.target_model = DQN(state_dim, action_dim).to(self.device)
-        self.target_update = target_update
-        # hard copy model parameters to target model parameters
+        # 目标网络
+        self.target_model = DQN(state_dim, action_dim).to(self.device) 
+        self.target_update = target_update # 每隔target_update步更新目标网络
+
+        # 将目标网络初始化为当前网络
         for target_param, param in zip(self.model.parameters(), self.target_model.parameters()):
             target_param.data.copy_(param)
 
@@ -122,11 +125,12 @@ class DQNAgent:
         # 判定随机
         if (np.random.randn() < eps):
             if mask_action_space is not None:
-                # 从mask里面取一个
+                # 从mask里面取一个 mask_action_space = np.array( [2,3,4,6,7])
                 action = np.random.choice(mask_action_space)
                 return action,qvals            
             return self.env.action_space.sample(),qvals
         
+        return action,qvals
         # 判定有无mask
         # if mask_action_space is not None:
         #     # print("before ",qvals)
@@ -142,9 +146,7 @@ class DQNAgent:
         #     action = np.random.choice(self.env.action_space.n, p=action_probs.flatten())
         #     # print("action",action)
         #     return action,qvals
-
-        
-        return action,qvals
+        # return action,qvals
 
     def compute_loss(self, batch):     
         # states, actions, rewards, next_states, dones = batch
@@ -236,3 +238,76 @@ class DQNAgent:
         self.model.load_state_dict(torch.load(path))
         self.target_model.load_state_dict(torch.load(path))
 
+
+
+class PPOAgent(BaseAgent):
+    def __init__(self, state_dim, action_dim, hidden_dim, lr_actor, lr_critic, gamma, 
+                 n_updates_critic=1, m_updates_actor=1, epsilon=0.2):
+        super(PPOAgent, self).__init__()
+        self.actor = Actor(state_dim, action_dim, hidden_dim).to(self.device)
+        self.critic = Critic(state_dim, hidden_dim).to(self.device)
+        self.optimizer_actor = optim.Adam(self.actor.parameters(), lr=lr_actor)
+        self.optimizer_critic = optim.Adam(self.critic.parameters(), lr=lr_critic)
+        self.gamma = gamma
+        self.n_updates_critic = n_updates_critic
+        self.m_updates_actor = m_updates_actor
+        self.epsilon = epsilon
+        self.update_times = 0
+        self.action_dim = action_dim
+        self.state_dim = state_dim
+
+    def select_action(self, state, eps=0.20):
+        
+
+        state = torch.tensor(state, dtype=torch.float32, device=self.device).unsqueeze(0).to(self.device)
+        action_probs = self.actor(state)
+        # 判定随机
+        if (np.random.randn() < eps):
+            action = np.random.choice(self.action_dim)
+            return action,action_probs            
+
+        dist = Categorical(action_probs)
+        action = dist.sample()
+        return action.item(), dist.log_prob(action)
+
+    def update(self, states, actions, rewards, next_states, dones):
+        states = torch.tensor(states, dtype=torch.float32, device=self.device)
+        actions = torch.tensor(actions, dtype=torch.long, device=self.device)
+        rewards = torch.tensor(rewards, dtype=torch.float32, device=self.device)
+        next_states = torch.tensor(next_states, dtype=torch.float32, device=self.device)
+        self.update_times += 1
+
+        values = self.critic(states).squeeze()
+        next_values = self.critic(next_states).squeeze()
+        td_errors = rewards + self.gamma * next_values * (1 - dones) - values
+
+        if self.update_times % self.n_updates_critic == 0:
+            self.optimizer_critic.zero_grad()
+            critic_loss = td_errors.pow(2).mean()
+            critic_loss.backward()
+            self.optimizer_critic.step()
+
+        if self.update_times % self.m_updates_actor == 0:
+            self.optimizer_actor.zero_grad()
+            action_probs = self.actor(states)
+            dist = Categorical(action_probs)
+            log_probs = dist.log_prob(actions)
+            ratio = torch.exp(log_probs - log_probs.detach())
+            surr1 = ratio * td_errors.detach()
+            surr2 = torch.clamp(ratio, 1 - self.epsilon, 1 + self.epsilon) * td_errors.detach()
+            actor_loss = -torch.min(surr1, surr2).mean()
+            actor_loss.backward()
+            self.optimizer_actor.step()
+
+    def load_model(self, path, epoch=0):
+        print("load Model from ",path)
+        if os.path.exists(os.path.join(path, f'actor-{self.n_updates_critic}-{self.m_updates_actor}-{epoch}.pth')):
+            self.actor.load_state_dict(torch.load(os.path.join(path, f'actor-{self.n_updates_critic}-{self.m_updates_actor}-{epoch}.pth')))
+        if os.path.exists(os.path.join(path, f'critic-{self.n_updates_critic}-{self.m_updates_actor}-{epoch}.pth')):
+            self.critic.load_state_dict(torch.load(os.path.join(path, f'critic-{self.n_updates_critic}-{self.m_updates_actor}-{epoch}.pth')))
+
+    def save_model(self, path, epoch=0):
+        if not os.path.exists(path):
+            os.makedirs(path)
+        torch.save(self.actor.state_dict(), os.path.join(path, f'actor-{self.n_updates_critic}-{self.m_updates_actor}-{epoch}.pth'))
+        torch.save(self.critic.state_dict(), os.path.join(path, f'critic-{self.n_updates_critic}-{self.m_updates_actor}-{epoch}.pth'))
