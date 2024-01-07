@@ -2,6 +2,7 @@ from comet_ml import Experiment, OfflineExperiment
 from comet_ml.integration.gymnasium import CometLogger
 import gymnasium as gym
 from config import hyperparameters,MAX_EPISODES,env_name,BATCH_SIZE,target_update
+from gymnasium.wrappers import FrameStack,FlattenObservation
 
 def episode_trigger_func(episode):
     print("choose episode ",episode)
@@ -28,8 +29,10 @@ experiment = OfflineExperiment(
 
 # env = gym.make('Acrobot-v1', render_mode="rgb_array")
 # 
-# env = gym.make("ALE/DonkeyKong-v5",render_mode="rgb_array",obs_type="ram")
 env = gym.make(env_name,render_mode="rgb_array",obs_type="ram")
+# env = FrameStack(env, 4) # 堆叠4帧，可以学习到场景的方向,此时维度是(4,128)
+# print("STATE_DIM 2",env.observation_space.shape)
+# env = FlattenObservation(env) # 转为1维的shape 
 env = gym.wrappers.RecordVideo(env, f'video-{env_name}-{BATCH_SIZE}-{target_update}')
 env = CometLogger(env, experiment)
 
@@ -43,4 +46,4 @@ hyperparameters['ACTION_DIM'] = ACTION_DIM
 
 print("env.observation_space",env.observation_space)
 print("env.action_space",env.action_space)
-experiment.log_parameters(hyperparameters)
+# experiment.log_parameters(hyperparameters)
