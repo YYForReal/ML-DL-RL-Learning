@@ -39,6 +39,11 @@ comet upload /path/to/save/experiments/*.zip
 
 to send your experiment to Comet.
 
+<!-- 导出key -->
+
+export COMET_CONFIG=<Path To Your Comet Config>
+export COMET_CONFIG='./comet-config.txt'
+
 
 
 ### 结论

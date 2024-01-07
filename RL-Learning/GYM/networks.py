@@ -19,6 +19,7 @@ class Actor(nn.Module):
     def forward(self, state):
         x = torch.relu(self.fc1(state))
         x = torch.relu(self.fc2(x))
+        x = torch.relu(self.fc3(x))        
         return torch.softmax(x, dim=-1)
 
 
@@ -33,7 +34,7 @@ class Critic(nn.Module):
     def forward(self, state):
         x = torch.relu(self.fc1(state))
         x = torch.relu(self.fc2(x))
-        return self.fc2(x)
+        return self.fc3(x)
 
 
 class ActorCritic(nn.Module):

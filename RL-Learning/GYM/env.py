@@ -1,7 +1,7 @@
 from comet_ml import Experiment, OfflineExperiment 
 from comet_ml.integration.gymnasium import CometLogger
 import gymnasium as gym
-from config import hyperparameters,MAX_EPISODES,env_name,BATCH_SIZE,target_update
+from config import hyperparameters,MAX_EPISODES,env_name,BATCH_SIZE,target_update,mode
 from gymnasium.wrappers import FrameStack,FlattenObservation
 
 def episode_trigger_func(episode):
@@ -17,11 +17,11 @@ project_name = env_name.split('/')[-1]
 
 
 # offline_directory="/path/to/save/experiments"
-experiment = OfflineExperiment(
+experiment = Experiment(
   api_key="jxCKAgc1LK4bLO9pQIuerERSJ",
   project_name=project_name,
   workspace="gym",
-  offline_directory="./experiments"
+#   offline_directory="./experiments"
 )
 
 
@@ -43,7 +43,7 @@ STATE_DIM = env.observation_space.shape[0] # 此时state_dim = 512
 
 print("STATE_DIM 3",env.observation_space.shape)
 
-env = gym.wrappers.RecordVideo(env, f'video-{env_name}-{BATCH_SIZE}-{target_update}')
+env = gym.wrappers.RecordVideo(env, f'video-{env_name}-{mode}-{BATCH_SIZE}-{target_update}')
 env = CometLogger(env, experiment)
 
 

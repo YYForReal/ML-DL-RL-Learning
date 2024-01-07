@@ -29,54 +29,57 @@ if os.path.exists(load_path):
 def mini_batch_train(env, agent, max_episodes, max_steps, batch_size):
     episode_rewards = []
     greedy_eps = 0.5 # 初始的随机概率
-    with open(csv_file_path, 'a', newline='') as csvfile:
-        fieldnames = ['Episode', 'Reward', 'Loss']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    max_reward = 0 # 最大奖励
 
-        for episode in range(max_episodes):
-            observation,_ = env.reset(seed=seed+episode) # 重置游戏环境
-            episode_reward = 0
-            greedy_eps = max(0.05,greedy_eps*0.999)  # 随着游戏局数递减
-            agent_loss = None
-            for step in range(max_steps):
-                # 动作选择
-                action,probs = agent.select_action(observation,eps=greedy_eps)
-                # 新版gym返回5个状态值
-                next_observation, reward, terminated, truncated, info = env.step(action)
-                done = terminated or truncated
-                # 存储到缓存区
-                agent.replay_buffer.push(observation, action, reward, next_observation, done)
-                episode_reward += reward
+    for episode in range(max_episodes):
+        observation,_ = env.reset(seed=seed+episode) # 重置游戏环境
+        episode_reward = 0
+        greedy_eps = max(0.05,greedy_eps*0.999)  # 随着游戏局数递减
+        agent_loss = None
+        for step in range(max_steps):
+            # 动作选择
+            action,probs = agent.select_action(observation,eps=greedy_eps)
+            # 新版gym返回5个状态值
+            next_observation, reward, terminated, truncated, info = env.step(action)
+            done = terminated or truncated
+            # 存储到缓存区
+            agent.replay_buffer.push(observation, action, reward, next_observation, done)
+            episode_reward += reward
 
-                if len(agent.replay_buffer) > batch_size:
-                    agent_loss = agent.update(batch_size) 
+            if len(agent.replay_buffer) > batch_size:
+                agent_loss = agent.update(batch_size) 
 
-                if done or step == max_steps-1:
-                    episode_rewards.append(episode_reward)
-                    break
-                
-                observation = next_observation
-            print(f"Episode {episode}: {episode_rewards[-1]} loss: {agent_loss} greedy_eps {greedy_eps}")
+            if done or step == max_steps-1:
+                episode_rewards.append(episode_reward)
+                break
+            
+            observation = next_observation
+        print(f"Episode {episode}: {episode_rewards[-1]} loss: {agent_loss} greedy_eps {greedy_eps}")
+        max_reward = max(max_reward, episode_reward)
 
-            # 使用comet_ml记录
-            experiment.log_metric("loss", agent_loss,epoch=episode + load_points)
-            experiment.log_metric("reward", episode_reward,epoch=episode + load_points)
-
+        # 使用comet_ml记录
+        # experiment.log_metric("loss", agent_loss,epoch=episode + load_points)
+        # experiment.log_metric("reward", episode_reward,)
+        # experiment.log_metric("max_reward", max_reward,epoch=episode + load_points)
+        with open(csv_file_path, 'a', newline='') as csvfile:
+            fieldnames = ['Episode', 'Reward', 'Loss']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writerow({'Episode': episode + load_points, 'Reward': episode_reward, 'Loss': agent_loss})
-            if (episode + 1) % 10 == 0:
-                csvfile.flush()  # Flush the buffer to ensure data is written to disk
-            # 记录过往10的平均分数
-            if len(episode_rewards) > 10:
-                mean_reward = sum(episode_rewards[-10:]) / 10
-                print(f"Mean reward of last 10 episodes: {mean_reward}")
-                experiment.log_metric("mean_reward", mean_reward,epoch=episode + load_points)
+
+        if (episode + 1) % 10 == 0:
+            experiment.log_metrics({"reward": episode_reward, "max_reward": max_reward,"loss":agent_loss},epoch=episode + load_points)
+        # # 记录过往10的平均分数
+        # if len(episode_rewards) > 10:
+        #     mean_reward = sum(episode_rewards[-10:]) / 10
+        #     print(f"Mean reward of last 10 episodes: {mean_reward}")
+        #     experiment.log_metric("mean_reward", mean_reward,epoch=episode + load_points)
 
 
-            # 每隔1000次迭代保存模型
-            if (episode + load_points) % 1000 == 0:
-                # os拼接路径
-                path = os.path.join(os.path.dirname(__file__), 'checkpoints', f'{env_name}-DQNAgent-{BATCH_SIZE}-{target_update}-{episode + load_points}.pt')
-                agent.save_model(path)
+        # 每隔1000次迭代保存模型
+        if (episode + load_points) % 1000 == 0:
+            # os拼接路径
+            path = os.path.join(os.path.dirname(__file__), 'checkpoints', f'{env_name}-DQNAgent-{BATCH_SIZE}-{target_update}-{episode + load_points}.pt')
+            agent.save_model(path)
 
     return episode_rewards
 

@@ -1,4 +1,4 @@
-BATCH_SIZE = 128
+BATCH_SIZE = 256
 MAX_EPISODES = 30001
 MAX_STEPS = 5000
 seed = 12345
@@ -19,6 +19,8 @@ buffer_size = 100000
 n_updates_critic = 1 # 每n步更新一次critic
 m_updates_actor = 4 # 每m步更新一次actor
 
+mode = "AC"
+
 hyperparameters = {
     "MAX_EPISODES": MAX_EPISODES,
     "seed":seed,
@@ -32,5 +34,6 @@ hyperparameters = {
     "target_update":target_update,
     "m_updates_actor":m_updates_actor,
     "n_updates_critic":n_updates_critic,
-    "buffer_size":buffer_size
+    "buffer_size":buffer_size,
+    "mode":mode
 }
