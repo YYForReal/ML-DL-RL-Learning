@@ -11,7 +11,7 @@ import os
 # 定义一个通用的Agent类，具有动作选择、加载保存初始模型的功能，供其他agent继承
 class BaseAgent:
     def __init__(self):
-        self.device = torch.device("cuda:2" if torch.cuda.is_available() else "cpu")
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
     def select_action(self, state):
         raise NotImplementedError
