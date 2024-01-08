@@ -12,7 +12,7 @@ def episode_trigger_func(episode):
         return True
     return False
 
-def make_env(env_name):
+def make_env(env_name,mode):
 
     # 去除env_name的/,取右边内容
     project_name = env_name.split('/')[-1]
@@ -48,3 +48,4 @@ def make_env(env_name):
     return env
 
 
+# env = make_env(env_name)
