@@ -6,3 +6,6 @@ __pycache__
 wandb/*
 RL-Learning/GYM/video-ALE/*
 RL-Learning/GYM/comet-config.txt
+RL-Learning/GYM/wandb/*
+RL-Learning/easy21
+RL-Learning/pytorch-soft-actor-critic

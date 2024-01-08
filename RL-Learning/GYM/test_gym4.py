@@ -95,7 +95,7 @@ def train(env):
 
 
 def train_single(env,agent,mode,extra_title=""):
-    wandb.init(project=f"gym-{env_name}",name=f"{mode}{extra_title}",config=hyperparameters)
+    wandb.init(project=f"gym-{env_name.split('/')[-1]}",name=f"{mode}{extra_title}",config=hyperparameters)
     mini_batch_train(env,agent,MAX_EPISODES,MAX_STEPS,BATCH_SIZE)
     wandb.finish()
 
