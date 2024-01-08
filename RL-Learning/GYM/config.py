@@ -1,6 +1,6 @@
 BATCH_SIZE = 32
 MAX_EPISODES = 50000
-MAX_STEPS = 10000
+MAX_STEPS = 1000000
 seed = 12345
 # state_dim, action_dim, hidden_dim, lr_actor, lr_critic, gamma
 lr_actor = 0.001
