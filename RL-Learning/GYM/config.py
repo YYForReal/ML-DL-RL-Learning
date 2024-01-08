@@ -19,7 +19,7 @@ env_name = "ALE/DemonAttack-ram-v5"
 target_update = 10
 
 target_update = 5 # 每隔target步更新一次DQN的目标网络
-buffer_size = 100000
+buffer_size = 1000000
 
 
 n_updates_critic = 1 # 每n步更新一次critic
