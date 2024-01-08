@@ -1,14 +1,17 @@
 # from env import env ,experiment
+from collections import deque
 from env import make_env
 from config import MAX_EPISODES,lr_actor,lr_critic,gamma,MAX_STEPS,BATCH_SIZE,env_name,target_update,hyperparameters,seed,buffer_size,load_points,mode
-
+import numpy as np
 from models import ActorCriticAgent,DQNAgent
 import os
 import wandb
 
 
 def mini_batch_train(env, agent, max_episodes, max_steps, batch_size):
-    episode_rewards = []
+    # 声明最新的episode_rewards队列（容量为10）
+    episode_rewards = deque(maxlen=10)
+
     greedy_eps = 0.8 # 初始的随机概率
     mean_reward = 0 # 计算前10次的reward
 
@@ -48,10 +51,14 @@ def mini_batch_train(env, agent, max_episodes, max_steps, batch_size):
         # max_reward = max(episode_reward,max_reward)
 
         # 计算最新10次的平均reward
-        if len(episode_rewards) > 10:
-            mean_reward = episode_rewards[-10:].mean()  
-        else:
-            mean_reward = episode_rewards.mean()
+        # if len(episode_rewards) > 10:
+        #     mean_reward = episode_rewards[-10:].mean()  
+        # else:
+            # mean_reward = episode_rewards.mean()
+
+        # 求deque的平均
+        mean_reward = np.mean(episode_rewards)
+
 
         # 使用comet_ml记录
         # experiment.log_metric("loss", agent_loss,epoch=episode + load_points)
@@ -66,7 +73,6 @@ def mini_batch_train(env, agent, max_episodes, max_steps, batch_size):
             path = os.path.join(os.path.dirname(__file__), 'checkpoints', f'{env_name}-{mode}-{BATCH_SIZE}-{target_update}-{episode + load_points}.pt')
             agent.save_model(path)
 
-    return episode_rewards
 
 
 
@@ -103,7 +109,7 @@ def train_single(env,agent,mode,extra_title=""):
 
 
 mode = "DQN"
-env = make_env(env_name)
+env = make_env(env_name,mode)
 STATE_DIM = env.observation_space.shape[0]
 ACTION_DIM = env.action_space.n
 print(STATE_DIM,ACTION_DIM)
@@ -113,7 +119,8 @@ for i in range(len(buffer_sizes)):
     hyperparameters['buffer_size'] = buffer_sizes[i]
     buffer_size = buffer_sizes[i]  
     agent = DQNAgent(env=env,buffer_size=buffer_size,target_update=target_update)
-    train_single(env, agent, mode, extra_title=f"-{buffer_size}")
+    train_single(env, agent, mode,
+                 extra_title=f"-size-{buffer_size}-update-{target_update}")
 
     # # 设置加载点，加载模型
     # load_path = os.path.join(os.path.dirname(__file__), "checkpoints",f"{env_name}-{mode}-{BATCH_SIZE}-{target_update}-{load_points}.pt")

@@ -9,3 +9,4 @@ RL-Learning/GYM/comet-config.txt
 RL-Learning/GYM/wandb/*
 RL-Learning/easy21
 RL-Learning/pytorch-soft-actor-critic
+RL-Learning/GYM/video-DemonAttack-ram-v5/*

@@ -16,16 +16,16 @@ env_name = "ALE/DemonAttack-ram-v5"
 # env_name = "ALE/DonkeyKong-v5"
 # env = gym.make("ALE/DonkeyKong-v5",render_mode="rgb_array",obs_type="ram")
 
-target_update = 10
+# target_update = 10
 
-target_update = 5 # 每隔target步更新一次DQN的目标网络
+target_update = 10 # 每隔target步更新一次DQN的目标网络
 buffer_size = 1000000
 
 
 n_updates_critic = 1 # 每n步更新一次critic
 m_updates_actor = 4 # 每m步更新一次actor
 
-mode = "AC"
+mode = "DQN"
 
 
 
