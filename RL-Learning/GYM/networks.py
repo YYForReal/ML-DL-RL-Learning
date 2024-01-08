@@ -60,7 +60,7 @@ class ReplayBuffer:
         self.buffer = deque(maxlen=max_size)  
 
     def push(self, state, action, reward, next_state, done):
-        experience = (state, action, np.array([reward]), next_state, done)
+        experience = (state, action, reward, next_state, done)
         self.buffer.append(experience)
 
     # 采样
@@ -86,6 +86,24 @@ class ReplayBuffer:
     def __len__(self):
         return len(self.buffer)
 
+    # 保存与加载
+    def save(self, path):
+        states, actions, rewards, next_states, dones = zip(*self.buffer)
+        np.savez(path, states=np.asarray(states), actions=np.asarray(actions),
+                 rewards=np.asarray(rewards), next_states=np.asarray(next_states),
+                 dones=np.asarray(dones))
+
+    def load(self, path):
+        data = np.load(path, allow_pickle=True)
+        states = data['states']
+        actions = data['actions']
+        rewards = data['rewards']
+        next_states = data['next_states']
+        dones = data['dones']
+
+        self.buffer = deque(zip(states, actions, rewards, next_states, dones))
+        print(f"load buffer successful: {len(self.buffer)}")
+        
 
 # 似乎用不了
 class PrioritizedBuffer:

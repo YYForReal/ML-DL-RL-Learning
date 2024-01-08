@@ -2,7 +2,7 @@ from comet_ml import Experiment, OfflineExperiment
 from comet_ml.integration.gymnasium import CometLogger
 import gymnasium as gym
 from config import hyperparameters,MAX_EPISODES,env_name,BATCH_SIZE,target_update,mode
-from gymnasium.wrappers import FrameStack,FlattenObservation
+from gymnasium.wrappers import FrameStack,FlattenObservation,atari_preprocessing
 
 def episode_trigger_func(episode):
     print("choose episode ",episode)
@@ -12,7 +12,7 @@ def episode_trigger_func(episode):
         return True
     return False
 
-def make_env(env_name,mode):
+def make_env(env_name,mode,render_mode="rgb_array",obs_type="ram"):
 
     # 去除env_name的/,取右边内容
     project_name = env_name.split('/')[-1]
@@ -27,7 +27,8 @@ def make_env(env_name,mode):
 
     # env = gym.make('Acrobot-v1', render_mode="rgb_array")
     # 
-    env = gym.make(env_name,render_mode="rgb_array",obs_type="ram")
+    env = gym.make(env_name,render_mode=render_mode,obs_type=obs_type)
+    # env = atari_preprocessing.AtariPreprocessing(env,  frame_skip=1,terminal_on_life_loss=True) # 
     # env = FrameStack(env, 4) # 堆叠4帧，可以学习到场景的方向,此时维度是(4,128)
     # print("STATE_DIM 2",env.observation_space.shape)
     # env = FlattenObservation(env) # 转为1维的shape 

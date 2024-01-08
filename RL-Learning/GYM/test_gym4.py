@@ -76,28 +76,6 @@ def mini_batch_train(env, agent, max_episodes, max_steps, batch_size):
 
 
 
-def train(env):
-    print("action space : ", env.action_space)
-    for episode in range(MAX_EPISODES):
-        observation, info = env.reset()
-        truncated = False
-        terminated = False
-        print(observation)
-        print(type(observation))
-        while not (truncated or terminated):
-            # action = env.action_space.sample()
-            print("observation",observation)
-            action,_ = agent.select_action(observation)
-            print("choose action",action)
-            new_observation, reward, terminated, truncated, info = env.step(action)
-            print("observation",observation)
-            agent.update([observation], [action], [reward], [new_observation], [terminated])
-            env.render()
-            observation = new_observation
-
-    env.close() #Uploads video folder 'test' to Comet
-
-
 
 
 def train_single(env,agent,mode,extra_title=""):
@@ -114,11 +92,17 @@ STATE_DIM = env.observation_space.shape[0]
 ACTION_DIM = env.action_space.n
 print(STATE_DIM,ACTION_DIM)
 
-buffer_sizes = [10000,100000,1000000]
+buffer_sizes = [int(1e5),int(1e4),int(1e6)]
 for i in range(len(buffer_sizes)):
     hyperparameters['buffer_size'] = buffer_sizes[i]
     buffer_size = buffer_sizes[i]  
     agent = DQNAgent(env=env,buffer_size=buffer_size,target_update=target_update)
+    load_buffer_path = os.path.join(os.path.dirname(__file__), 'checkpoints', f'{env_name.split("/")[-1]}.npy.npz')
+    print("load_buffer_path",load_buffer_path)
+    if os.path.exists(load_buffer_path):
+        agent.load_buffer(load_buffer_path)
+        # print("load buffer successful",load_buffer_path)
+
     train_single(env, agent, mode,
                  extra_title=f"-size-{buffer_size}-update-{target_update}")
 

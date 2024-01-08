@@ -115,7 +115,10 @@ class DQNAgent:
         self.optimizer = torch.optim.Adam(self.model.parameters())
         self.sample_count = 0 # 采样步数
 
-        
+    def load_buffer(self,path):
+        if os.path.exists(path):
+            self.replay_buffer.load(path)
+    
     def select_action(self, state, eps=0.20,mask_action_space=None):
         self.sample_count += 1
 
@@ -197,6 +200,8 @@ class DQNAgent:
     #     return loss.item()
 
     def update(self, batch_size, share_agent=None):
+        if share_agent:
+            self.replay_buffer.push(share_agent.replay_buffer.buffer)
         # 从经验回放中采样
         state_batch, action_batch, reward_batch, next_state_batch, done_batch = self.replay_buffer.sample(batch_size)
 
