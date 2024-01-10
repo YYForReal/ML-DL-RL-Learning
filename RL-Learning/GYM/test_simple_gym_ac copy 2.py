@@ -63,7 +63,7 @@ def train_single(env,agent,mode,extra_title=""):
     
     
 mode = "ActorCritic"
-env = make_env(env_name,mode)
+env = make_env(env_name,mode=mode)
 STATE_DIM = env.observation_space.shape[0]
 ACTION_DIM = env.action_space.n
 print(STATE_DIM,ACTION_DIM)

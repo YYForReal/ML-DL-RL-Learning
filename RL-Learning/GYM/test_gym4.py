@@ -30,7 +30,7 @@ def mini_batch_train(env, agent, max_episodes, max_steps, batch_size):
             mask_action_space = None
             
             action,probs = agent.select_action(observation,eps=greedy_eps,mask_action_space=mask_action_space)
-
+            
             # 新版gym返回5个状态值
             # next_observation, reward, done, _ = env.step(action)
             next_observation, reward, terminated, truncated, info = env.step(action)

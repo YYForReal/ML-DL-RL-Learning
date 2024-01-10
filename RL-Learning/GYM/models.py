@@ -21,6 +21,17 @@ class BaseAgent:
     
     def save_model(self, path):
         raise NotImplementedError
+    # TODO 和上一个状态的差异，可以改进为多个
+    def compute_diff_reward(self, state,prev_state):
+        # TODO 使用欧氏距离作为状态之间的差异度量，可以改进为其他度量
+        state = torch.tensor(state, dtype=torch.float32, device=self.device)
+        prev_state = torch.tensor(prev_state, dtype=torch.float32, device=self.device)
+        diff = torch.abs(state - prev_state).sum().item()
+        self.max_diff = max(self.max_diff, diff)
+        self.min_diff = min(self.min_diff, diff)        
+        # 标准化差异值到 0 到 1 的范围
+        normalized_diff = (diff - self.min_diff) / ((self.max_diff - self.min_diff) + 1)
+        return normalized_diff
 
 # 定义Actor-Critic Agent
 class ActorCriticAgent(BaseAgent):

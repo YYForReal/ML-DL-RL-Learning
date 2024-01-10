@@ -1,10 +1,12 @@
 from env import make_env
+from collections import deque
+
 from config import MAX_EPISODES,lr_actor,lr_critic,gamma,MAX_STEPS,BATCH_SIZE,env_name,target_update,m_updates_actor,n_updates_critic,load_points,hidden_dim,hyperparameters
 
-from models import ActorCriticAgent,DQNAgent
+from models import ActorCriticAgent,DQNAgent,PPOAgent
 import os
 import wandb
-
+import numpy as np
 os.environ["WANDB_API_KEY"] = "44d22c3006abd6799112a392f847ac52b285ad31"
 
 
@@ -13,9 +15,11 @@ base_path = os.path.join(os.path.dirname(__file__), 'checkpoints')
 
 
 def mini_batch_train(env, agent, max_episodes, max_steps, batch_size):
-    episode_rewards = []
+    episode_rewards = deque(maxlen=10)
     greedy_eps = 0.5
     max_reward = -22
+    mean_reward = 0 # 计算前10次的reward
+
     for episode in range(max_episodes):
         observation,_ = env.reset()
         episode_reward = 0
@@ -41,8 +45,11 @@ def mini_batch_train(env, agent, max_episodes, max_steps, batch_size):
         print(f"Episode {episode}: {episode_rewards[-1]}  greedy_eps {greedy_eps}")
         max_reward = max(episode_reward,max_reward)
 
+        mean_reward = np.mean(episode_rewards)
 
-        wandb.log({"loss":agent_loss,"reward":episode_reward,"max_reward":max_reward},step=episode + load_points)
+        wandb.log({"loss":agent_loss,"reward":episode_reward,"mean_reward":mean_reward},step=episode + load_points)
+
+        # wandb.log({"loss":agent_loss,"reward":episode_reward,"max_reward":max_reward},step=episode + load_points)
 
         # 使用comet_ml记录
         # experiment.log_metric("loss", agent_loss,epoch=episode + load_points)
@@ -63,7 +70,7 @@ def train_single(env,agent,mode,extra_title=""):
     
     
 mode = "ActorCritic"
-env = make_env(env_name)
+env = make_env(env_name,mode)
 STATE_DIM = env.observation_space.shape[0]
 ACTION_DIM = env.action_space.n
 print(STATE_DIM,ACTION_DIM)
@@ -80,7 +87,7 @@ n_updates_critics = [1]
 for i in range(len(m_updates_actors)):
     hyperparameters["m_updates_actor"] = m_updates_actors[i]
     hyperparameters["n_updates_critic"] = n_updates_critics[i]
-    agent = ActorCriticAgent(state_dim=STATE_DIM, action_dim=ACTION_DIM, hidden_dim = hidden_dim,
+    agent = PPOAgent(state_dim=STATE_DIM, action_dim=ACTION_DIM, hidden_dim = hidden_dim,
                             lr_actor=lr_actor, lr_critic=lr_critic, gamma=gamma,
                             m_updates_actor=m_updates_actors[i],n_updates_critic=n_updates_critics[i])
 
