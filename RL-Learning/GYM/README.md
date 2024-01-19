@@ -1,13 +1,32 @@
+## 说明
+
+没能在课程结课时完整迭代一个human-level的agent，深感遗憾。
+
+最新进展将在https://github.com/YYForReal/ML-DL-RL-Learning/tree/main/RL-Learning/GYM 可见。
+
+### 环境
+
 pip install moviepy
+
 pip install comet_ml
+
 pip install gymnasium
+
 pip install gymnasium[classic-control]
+
 pip install gymnasium[other]
+
 pip install "gymnasium[atari, accept-rom-license]"
+
 pip install atari-py
+
 pip install autorom
+
 AutoROM --accept-license
+
 pip install gymnasium[accept-rom-license]
+
+
 
 ## 安装bug
 
