@@ -1,3 +1,6 @@
+## WESAD 数据集分析与模型训练
+### 加载数据
+# 我们首先加载WESAD数据集中的特定受试者的数据。每个受试者的数据存储在一个.pkl文件中，包含了信号数据、标签和受试者信息。
 
 import torch
 import torch.nn as nn
@@ -10,34 +13,48 @@ import pickle
 import torch.nn.functional as F
 from tqdm import tqdm
 
-# 加载数据
+# 固定随机种子以便复现
+def set_seed(seed):
+    torch.manual_seed(seed)
+    np.random.seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
+
+set_seed(42)
+
+# 加载数据函数
+# 该函数从指定路径加载特定受试者的数据文件，并返回解压后的数据字典。
 def load_wesad_data(participant_id, data_path='WESAD'):
     file_path = os.path.join(data_path, f'S{participant_id}', f'S{participant_id}.pkl')
     with open(file_path, 'rb') as file:
         data = pickle.load(file, encoding='latin1')
     return data
 
-# 数据预处理
+# 数据预处理函数
+# 该函数对ECG、EDA、Temp和ACC数据进行标准化处理，并将不同类型的数据组合在一起，同时重新映射标签以确保标签值从0到6连续。
 def preprocess_data(data):
     ecg_data = data['signal']['chest']['ECG']
     eda_data = data['signal']['chest']['EDA'].reshape(-1, 1)
     temp_data = data['signal']['chest']['Temp'].reshape(-1, 1)
     acc_data = data['signal']['chest']['ACC']
     
+    # 保证所有数据的长度一致
     min_length = min(len(ecg_data), len(eda_data), len(temp_data), len(acc_data))
     ecg_data = ecg_data[:min_length]
     eda_data = eda_data[:min_length]
     temp_data = temp_data[:min_length]
     acc_data = acc_data[:min_length]
 
+    # 将所有数据合并为一个数组
     combined_data = np.hstack((ecg_data, eda_data, temp_data, acc_data))
     
+    # 数据标准化
     scaler = StandardScaler()
     combined_data = scaler.fit_transform(combined_data)
     
     labels = data['label'][:min_length]
     
-    # 重新映射标签
+    # 重新映射标签，使得标签从0到6连续
     label_mapping = {0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 6: 5, 7: 6}
     mapped_labels = np.vectorize(label_mapping.get)(labels)
     
@@ -55,19 +72,23 @@ print(preprocessed_data.shape)
 print(labels.shape)
 
 # 将数据转换为PyTorch张量
+# 使用torch.tensor将numpy数组转换为PyTorch张量
 X_tensor = torch.tensor(preprocessed_data, dtype=torch.float32)
 y_tensor = torch.tensor(labels, dtype=torch.long)
 
 # 划分训练集和测试集
+# 使用torch.utils.data.random_split将数据集随机划分为训练集和测试集
 train_size = int(0.8 * len(X_tensor))
 test_size = len(X_tensor) - train_size
 X_train, X_test = torch.utils.data.random_split(TensorDataset(X_tensor, y_tensor), [train_size, test_size])
 
 # 创建数据加载器
+# 使用DataLoader创建训练和测试数据的加载器
 train_loader = DataLoader(X_train, batch_size=32, shuffle=True)
 test_loader = DataLoader(X_test, batch_size=32, shuffle=False)
 
 # 定义CNN模型
+# 该模型包含一个一维卷积层、一个池化层和两个全连接层。
 class SimpleCNN(nn.Module):
     def __init__(self, input_size, num_classes):
         super(SimpleCNN, self).__init__()
@@ -84,6 +105,7 @@ class SimpleCNN(nn.Module):
         return x
 
 # 初始化模型、损失函数和优化器
+# 创建CNN模型实例，并定义损失函数和优化器
 input_size = preprocessed_data.shape[1]
 num_classes = len(np.unique(labels))
 model = SimpleCNN(input_size, num_classes)
@@ -91,6 +113,7 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 # 训练模型
+# 训练模型时输出每个epoch的损失值
 num_epochs = 10
 for epoch in range(num_epochs):
     model.train()
@@ -108,6 +131,7 @@ for epoch in range(num_epochs):
     print(f'Loss: {epoch_loss:.4f}')
 
 # 测试模型
+# 测试模型并输出准确率和分类报告
 model.eval()
 correct = 0
 total = 0
