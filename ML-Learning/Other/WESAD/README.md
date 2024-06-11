@@ -39,4 +39,38 @@ WESAD（WEarable Stress and Affect Detection）数据集是一套用于检测穿
 3. **模型训练**：使用传统机器学习算法（如SVM、Random Forest）或深度学习算法（如神经网络）进行模型训练。
 4. **模型评估**：评估模型的性能，使用指标如准确率、F1分数等。
 
-通过这些步骤，可以有效利用WESAD数据集进行各种情感和压力检测任务的研究和应用。如果你有更多具体的问题或需要进一步的指导，请随时告知。
+
+
+
+
+```bash
+E:.
+│  .gitignore
+│  index.ipynb
+│  index.py
+│  README.md
+│
+└─WESAD
+    │  wesad_readme.pdf
+    │
+    ├─S10
+    │      S10.pkl
+    │      S10_E4_Data.zip
+    │      S10_quest.csv
+    │      S10_readme.txt
+    │      S10_respiban.txt
+    │
+    ├─S11
+    │      S11.pkl
+    │      S11_E4_Data.zip
+    │      S11_quest.csv
+    │      S11_readme.txt
+    │      S11_respiban.txt
+    ...
+```
+
+
+
+index.py 执行结果
+
+![Alt text](image.png)
