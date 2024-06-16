@@ -29,7 +29,8 @@ y_valence = subject['labels'][:, 0]  # 效价标签
 print(f'原始数据维度: {X.shape}')
 
 # 对标签进行多分类（例如，分成3类：低、中、高）
-y_valence_multi = np.digitize(y_valence, bins=[3, 6])
+# y_valence_multi = np.digitize(y_valence, bins=[3, 6])
+y_valence_multi = np.where(y_valence >= 5, 1, 0)
 
 # 将数据展平成2D数组
 X_flat = X.reshape(X.shape[0], -1)

@@ -11,7 +11,7 @@ def load_wesad_data(participant_id, data_path="WESAD"):
 
 
 # 加载特定受试者的数据
-participant_id = 2  # 示例中加载第2个受试者的数据
+participant_id = 3  # 示例中加载第2个受试者的数据
 data = load_wesad_data(participant_id)
 
 # 查看数据结构
@@ -48,3 +48,13 @@ def check_feature_lengths(data):
 feature_lengths = check_feature_lengths(data)
 print("各特征的长度: ", feature_lengths)
 # 各特征的长度:  {'chest_ACC': 4255300, 'chest_ECG': 4255300, 'chest_EMG': 4255300, 'chest_EDA': 4255300, 'chest_Temp': 4255300, 'chest_Resp': 4255300, 'wrist_ACC': 194528, 'wrist_BVP': 389056, 'wrist_EDA': 24316, 'wrist_TEMP': 24316}
+
+
+# 输出前三行数据,遍历data['signal'].keys()一层，再遍历一层
+print("前3行数据:")
+# for key in data['signal']['chest'].keys():
+#     print(key, data['signal']['chest'][key][:3])
+for key in data["signal"].keys():
+    print("--- ", key, "data --- ")
+    for key2 in data["signal"][key].keys():
+        print(key2, data["signal"][key][key2][:3])
