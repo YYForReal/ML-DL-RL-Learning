@@ -15,3 +15,10 @@ RL-Learning/GYM/sever_exp/97fa22c60e154ecb91b0ef0ba8ebd7c2.zip
 RL-Learning/GYM/sever_exp/6744daddce3c4ca0b4c26f587ce04162.zip
 RL-Learning/GYM/sever_exp/a7222c48341947ae9a6117378a9f5e68.zip
 RL-Learning/GYM-donkey/*
+ML-Learning/Other/deap-dataset/model/dndt_min_cut_3_1000.pth
+ML-Learning/Other/deap-dataset/model/dndt_min_cut_4_1000.pth
+ML-Learning/Other/deap-dataset/model/dndt_min_cut_5_1000.pth
+*.log
+run-*
+logs*
+*.pth
