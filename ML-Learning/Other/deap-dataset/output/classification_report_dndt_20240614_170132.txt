@@ -1,0 +1,9 @@
+Classification Report (DNDT):
+              precision    recall  f1-score   support
+
+           0       0.60      0.75      0.67         4
+           1       0.67      0.50      0.57         4
+
+    accuracy                           0.62         8
+   macro avg       0.63      0.62      0.62         8
+weighted avg       0.63      0.62      0.62         8

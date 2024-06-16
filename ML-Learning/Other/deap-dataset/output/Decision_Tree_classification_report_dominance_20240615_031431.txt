@@ -1,0 +1,15 @@
+Label: dominance
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.32      0.36      0.34        87
+           1       0.65      0.60      0.62       169
+
+    accuracy                           0.52       256
+   macro avg       0.48      0.48      0.48       256
+weighted avg       0.53      0.52      0.53       256
+
+Confusion Matrix:
+[[ 31  56]
+ [ 67 102]]
+Training Time: 234.5445911884308 seconds

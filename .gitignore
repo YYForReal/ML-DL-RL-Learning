@@ -22,3 +22,4 @@ ML-Learning/Other/deap-dataset/model/dndt_min_cut_5_1000.pth
 run-*
 logs*
 *.pth
+ML-Learning/Other/deap-dataset/wandb/*

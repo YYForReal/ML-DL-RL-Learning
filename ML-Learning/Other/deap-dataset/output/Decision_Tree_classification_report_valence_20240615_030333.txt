@@ -1,0 +1,15 @@
+Label: valence
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.42      0.41      0.41       109
+           1       0.57      0.57      0.57       147
+
+    accuracy                           0.50       256
+   macro avg       0.49      0.49      0.49       256
+weighted avg       0.50      0.50      0.50       256
+
+Confusion Matrix:
+[[45 64]
+ [63 84]]
+Training Time: 175.87790703773499 seconds
