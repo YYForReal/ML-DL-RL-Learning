@@ -1,0 +1,15 @@
+Label: liking
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.33      0.33      0.33        85
+           1       0.67      0.67      0.67       171
+
+    accuracy                           0.56       256
+   macro avg       0.50      0.50      0.50       256
+weighted avg       0.56      0.56      0.56       256
+
+Confusion Matrix:
+[[ 28  57]
+ [ 56 115]]
+Training Time: 230.90401077270508 seconds

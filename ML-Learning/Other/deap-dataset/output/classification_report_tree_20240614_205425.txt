@@ -1,0 +1,9 @@
+Classification Report (Decision Tree):
+              precision    recall  f1-score   support
+
+           0       0.42      0.41      0.41       109
+           1       0.57      0.57      0.57       147
+
+    accuracy                           0.50       256
+   macro avg       0.49      0.49      0.49       256
+weighted avg       0.50      0.50      0.50       256

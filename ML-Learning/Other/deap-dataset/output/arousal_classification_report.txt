@@ -1,0 +1,13 @@
+测试集准确率: 62.50%
+分类报告:
+              precision    recall  f1-score   support
+
+           0       0.00      0.00      0.00         3
+           1       0.62      1.00      0.77         5
+
+    accuracy                           0.62         8
+   macro avg       0.31      0.50      0.38         8
+weighted avg       0.39      0.62      0.48         8
+混淆矩阵:
+[[0 3]
+ [0 5]]

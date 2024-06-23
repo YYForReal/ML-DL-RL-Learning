@@ -1,0 +1,15 @@
+Label: arousal
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.43      0.41      0.42       104
+           1       0.61      0.62      0.61       152
+
+    accuracy                           0.54       256
+   macro avg       0.52      0.52      0.52       256
+weighted avg       0.53      0.54      0.53       256
+
+Confusion Matrix:
+[[43 61]
+ [58 94]]
+Training Time: 202.25209665298462 seconds
