@@ -8,13 +8,13 @@
 
 1.  KNN 实现 简单的分类 与 回归
 2.  决策树DecisionTree 实现 判断特征的重要性 + 可视化决策树
-3.  Q-learning 实现 AI走迷宫
+3.  Q-learning 实现 AI走迷宫 （Success）
 4.  尝试 Q-learning 实现 井字棋 （好蠢的AI）
-5.  尝试 DQN 实现 五子棋 ing
+5.  尝试 DQN 实现 五子棋 ing （Failure）
 6.  动态规划版本的Q值求解
 7.  使用 蒙特卡洛方法和时序差分方法实现21点游戏应用
 8.  使用 DQN、AC方法求解 gymnasium 的Atari 游戏
-
+9.  使用 DQN 实现 AI走 随机迷宫 （Success）
 
 
 ### 学习日志
