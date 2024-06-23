@@ -12,15 +12,15 @@ import argparse
 from tqdm import tqdm
 
 # 超参数设置
-num_episodes = 1500  # 迭代次数
+num_episodes = 500  # 迭代次数
 epsilon = 1.0  # 初始探索率
 epsilon_min = 0.3  # 最小探索率
-epsilon_decay = 0.999  # 探索率衰减
+epsilon_decay = 0.995  # 探索率衰减
 learning_rate = 0.001  # 学习率
 discount_factor = 0.9  # 折扣因子
 batch_size = 64
 memory_size = 100000
-max_steps = 1000
+max_steps = 200
 model_path = "./models/dqn_maze.pt"
 
 maze_height, maze_width = 10, 10
@@ -36,10 +36,10 @@ def generate_single_map(height, width):
         [1, 0, 1, 0, 1, 0, 0, 1, 1, 1],
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
         [1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-        [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 1, 0, 0, 8, 0, 0, 0, 1],
         [1, 1, 1, 0, 1, 1, 1, 0, 0, 1],
         [1, 0, 0, 0, 0, 0, 0, 1, 1, 1],
-        [1, 0, 1, 0, 0, 1, 0, 0, 8, 1],
+        [1, 0, 1, 0, 0, 1, 0, 0, 0, 1],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     ])
     return maze
