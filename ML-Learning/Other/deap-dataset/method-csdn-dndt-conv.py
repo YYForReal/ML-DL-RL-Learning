@@ -15,7 +15,9 @@ from torch.utils.tensorboard import SummaryWriter
 from torch.utils.data import DataLoader, TensorDataset
 import time
 import datetime
+import argparse
 import matplotlib.pyplot as plt
+from tqdm import tqdm
 
 # 设置随机种子以确保可重复性
 np.random.seed(42)
@@ -30,15 +32,22 @@ def load_deap_data(file_path):
 
 
 # 提取数据和标签
-def get_data_and_labels(label_idx):
+def get_data_and_labels(label_idx, participant):
     data_dir = "data_preprocessed_python"
     X_list = []
     y_list = []
-    for i in range(1, 33):  # 32位参与者
+
+    if participant == 0:
+        participants = range(1, 33)
+    else:
+        participants = [participant]
+
+    for i in participants:
         data_file = os.path.join(data_dir, f"s{i:02d}.dat")
         subject = load_deap_data(data_file)
         X_list.append(subject["data"])
         y_list.append(subject["labels"][:, label_idx])
+
     X = np.concatenate(X_list, axis=0)
     y = np.concatenate(y_list, axis=0)
 
@@ -65,13 +74,9 @@ class FeatureExtractor(nn.Module):
 
     def forward(self, x):
         x = self.pool(F.relu(self.conv1(x)))
-        print(f"After conv1 and pool: {x.shape}")  # 添加特征维度输出
         x = self.pool(F.relu(self.conv2(x)))
-        print(f"After conv2 and pool: {x.shape}")  # 添加特征维度输出
         x = self.pool(F.relu(self.conv3(x)))
-        print(f"After conv3 and pool: {x.shape}")  # 添加特征维度输出
         x = x.view(x.size(0), -1)  # 展平操作
-        print(f"After flatten: {x.shape}")  # 添加特征维度输出
         x = self.dropout(F.relu(self.fc(x)))
         return x
 
@@ -107,13 +112,11 @@ class DNDT(nn.Module):
             self.cut_points_list + [self.leaf_score] + [self.temperature], lr=0.01
         )
 
-    # 计算克罗内克积
     def torch_kron_prod(self, a, b):
         res = torch.einsum("ij,ik->ijk", [a, b])
         res = torch.reshape(res, [-1, np.prod(res.shape[1:])])
         return res
 
-    # 软分箱算法
     def torch_bin(self, x, cut_points, temperature):
         D = cut_points.shape[0]
         W = torch.reshape(torch.linspace(1.0, D + 1.0, D + 1), [1, -1])
@@ -124,7 +127,6 @@ class DNDT(nn.Module):
         res = F.softmax(h, dim=1)
         return res
 
-    # 建树
     def nn_decision_tree(self, x):
         leaf = reduce(
             self.torch_kron_prod,
@@ -139,7 +141,7 @@ class DNDT(nn.Module):
         return self.nn_decision_tree(x)
 
     def fit(self, dataloader, writer, num_epochs):
-        for epoch in range(num_epochs):
+        for epoch in tqdm(range(num_epochs), desc="Training"):
             all_labels = []
             all_preds = []
             for x_batch, y_batch in dataloader:
@@ -174,23 +176,38 @@ class DNDT(nn.Module):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Train DNDT model on DEAP dataset")
+    parser.add_argument(
+        "--participant",
+        type=int,
+        default=0,
+        help="Participant ID (0 for all participants)",
+    )
+    parser.add_argument(
+        "--num_epochs", type=int, default=50, help="Number of training epochs"
+    )
+    parser.add_argument("--use_gpu", action="store_true", help="Use GPU for training")
+    args = parser.parse_args()
+
+    device = torch.device(
+        "cuda" if args.use_gpu and torch.cuda.is_available() else "cpu"
+    )
     label_idx = 0  # 使用第一个标签（效价）
 
     # 加载数据
-    X, y = get_data_and_labels(label_idx)
+    X, y = get_data_and_labels(label_idx, args.participant)
 
     # 输出原始数据形状
     print(f"Original data shape: {X.shape}")
 
     # 使用卷积神经网络提取特征
-    X_tensor = torch.tensor(X, dtype=torch.float32).permute(
-        0, 2, 1
+    X_tensor = (
+        torch.tensor(X, dtype=torch.float32).permute(0, 2, 1).to(device)
     )  # 变换形状为 (batch_size, channels, sequence_length)
-    print(f"X_tensor shape: {X_tensor.shape}")
-    feature_extractor = FeatureExtractor(input_channels=X_tensor.shape[1])
+    feature_extractor = FeatureExtractor(input_channels=X_tensor.shape[1]).to(device)
     print(feature_extractor)
     with torch.no_grad():
-        features = feature_extractor(X_tensor).numpy()
+        features = feature_extractor(X_tensor).cpu().numpy()
 
     # 输出特征提取后的数据形状
     print(f"Feature extracted data shape: {features.shape}")
@@ -207,18 +224,18 @@ if __name__ == "__main__":
     test_loader = create_dataloader(X_test, y_test, batch_size=32)
 
     # 调整 num_cut 以降低内存需求
-    num_cut = [5] * min(X_train.shape[1], 3)  # 降低每个特征的切分点数
+    num_cut = [1] * min(X_train.shape[1], 3)  # 降低每个特征的切分点数
 
     # 打印调试信息
     print(f"num_leaf: {np.prod(np.array(num_cut) + 1)}")
 
     # 搭建模型
-    dndt = DNDT(num_cut, num_class=2, temperature=0.1)
+    dndt = DNDT(num_cut, num_class=2, temperature=0.1).to(device)
     writer = SummaryWriter(log_dir=os.path.join("logs", "DNDT"))
 
     # 训练模型
     start_time = time.time()
-    dndt.fit(train_loader, writer, num_epochs=1000)
+    dndt.fit(train_loader, writer, num_epochs=args.num_epochs)
     print("--- %s seconds ---" % (time.time() - start_time))
 
     # 预测
@@ -229,7 +246,7 @@ if __name__ == "__main__":
     # 保存分类报告到文件
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     os.makedirs("output", exist_ok=True)
-    with open(f"output/classification_report_dndt_{timestamp}.txt", "w") as f:
+    with open(f"output/CNN_DNDT_classification_report_{timestamp}.txt", "w") as f:
         f.write("Classification Report (DNDT):\n")
         f.write(classification_report(y_true, y_pred))
 
@@ -243,9 +260,7 @@ if __name__ == "__main__":
     clf = tree.DecisionTreeClassifier()
 
     start_time = time.time()
-
     clf = clf.fit(X_train, y_train)
-
     y_pred_tree = clf.predict(X_test)
 
     print("--- %s seconds ---" % (time.time() - start_time))
@@ -253,7 +268,7 @@ if __name__ == "__main__":
     print(classification_report(y_test, y_pred_tree))
 
     # 保存分类报告到文件
-    with open(f"output/classification_report_tree_{timestamp}.txt", "w") as f:
+    with open(f"output/CNN_DNDT_classification_report_tree_{timestamp}.txt", "w") as f:
         f.write("Classification Report (Decision Tree):\n")
         f.write(classification_report(y_test, y_pred_tree))
 
@@ -279,7 +294,7 @@ if __name__ == "__main__":
     plt.ylabel("Predicted")
     plt.title("Predictions vs Actual")
     plt.legend()
-    plt.savefig(f"output/predictions_vs_actual_{timestamp}.png")
+    plt.savefig(f"output/CNN_DNDT_predictions_vs_actual_{timestamp}.png")
     plt.show()
 
     # 使用plot_tree进行决策树可视化
@@ -287,5 +302,5 @@ if __name__ == "__main__":
     tree.plot_tree(
         clf, filled=True, rounded=True, max_depth=3
     )  # 限制树的深度为3，使图更简洁
-    plt.savefig(f"output/decision_tree_{timestamp}.png")
+    plt.savefig(f"output/CNN_DNDT_decision_tree_{timestamp}.png")
     plt.show()

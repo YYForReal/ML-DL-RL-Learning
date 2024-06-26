@@ -15,13 +15,14 @@ from torch.utils.data import DataLoader, TensorDataset
 import time
 import datetime
 import wandb
+import scipy.stats as stats
 
 # 设置随机种子以确保可重复性
 np.random.seed(42)
 torch.manual_seed(42)
 
-
-import scipy.stats as stats
+# 确定设备（CPU或GPU）
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # 示例数据
 # X.shape: (1280, 40, 8064)
@@ -31,29 +32,16 @@ import scipy.stats as stats
 def extract_features(X):
     features = []
     print(f"Extracting features from {X.shape[0]} samples...")
-    # 遍历每个样本
     for sample in X:
         sample_features = []
-        # 遍历每个通道
         for channel in sample:
-            # 计算均值 (Mean)
             mean = np.mean(channel)
-            # 计算标准差 (Standard Deviation)
             std_dev = np.std(channel)
-            # 计算偏度 (Skewness)
             skewness = stats.skew(channel)
-            # 计算峰度 (Kurtosis)
             kurtosis = stats.kurtosis(channel)
-            # 计算最大值 (Max)
             max_val = np.max(channel)
-            # 计算最小值 (Min)
             min_val = np.min(channel)
-            # 计算范围 (Range)
             range_val = max_val - min_val
-            # # 计算四分位数 (Quartiles)
-            # quartiles = np.percentile(channel, [25, 50, 75])
-
-            # 将所有特征添加到当前通道的特征列表中
             sample_features.extend(
                 [
                     mean,
@@ -63,16 +51,9 @@ def extract_features(X):
                     max_val,
                     min_val,
                     range_val,
-                    # quartiles[0],
-                    # quartiles[1],
-                    # quartiles[2],
                 ]
             )
-
-        # 将当前样本的特征列表添加到总特征列表中
         features.append(sample_features)
-
-    # 将特征列表转换为numpy数组并返回
     return np.array(features)
 
 
@@ -95,51 +76,19 @@ def get_data_and_labels(label_idx):
         y_list.append(subject["labels"][:, label_idx])
     X = np.concatenate(X_list, axis=0)
     y = np.concatenate(y_list, axis=0)
-
     y_binary = np.where(y >= 5, 1, 0)
     return X, y_binary
-
-
-# 使用PCA进行降维
-# def extract_features(X):
-#     pca = PCA(n_components=min(40, X.shape[2]))  # 保留最多40个主成分
-#     X_pca = np.array([pca.fit_transform(sample.T).T for sample in X])
-#     return X_pca
-
-
-# # 特征缩放并划分训练集和测试集
-# def preprocess_data(X, y):
-#     print(f"Original data shape: {X.shape}")  # Original data shape: (1280, 40, 8064)
-#     X_reshaped = X.reshape(X.shape[0], -1)  # 展平数据
-#     print(
-#         f"Reshaped data shape: {X_reshaped.shape}"
-#     )  # Reshaped data shape: (1280, 322560)
-#     scaler = StandardScaler()
-#     X_scaled = scaler.fit_transform(X_reshaped)
-#     print(f"Scaled data shape: {X_scaled.shape}")  # Scaled data shape: (1280, 322560)
-#     input("===preprocess_data===")
-#     return train_test_split(X_scaled, y, test_size=0.2, random_state=42)
 
 
 # 特征提取并预处理
 def preprocess_data(X, y):
     print(f"Original data shape: {X.shape}")  # Original data shape: (1280, 40, 8064)
-
-    # 提取特征 (40个通道 -> qian 32个特征)
     X = X[:, :32, :]
-
-    # 提取特征
     X_features = extract_features(X)
-    print(
-        f"Extracted features shape: {X_features.shape}"
-    )  # Extracted features shape: (1280, 特征数量)
-
-    # 标准化
+    print(f"Extracted features shape: {X_features.shape}")
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X_features)
-    print(f"Scaled data shape: {X_scaled.shape}")  # Scaled data shape: (1280, 特征数量)
-
-    input("===preprocess_data===")
+    print(f"Scaled data shape: {X_scaled.shape}")
     return train_test_split(X_scaled, y, test_size=0.2, random_state=42)
 
 
@@ -158,33 +107,35 @@ class DNDT(nn.Module):
         self.num_cut = num_cut
         self.num_leaf = np.prod(np.array(num_cut) + 1)
         self.num_class = num_class
-        self.temperature = torch.tensor(temperature)
-        self.cut_points_list = [torch.rand([i], requires_grad=True) for i in num_cut]
+        self.temperature = torch.tensor(temperature, device=device)
+        self.cut_points_list = [
+            torch.rand([i], requires_grad=True, device=device) for i in num_cut
+        ]
         self.leaf_score = torch.rand(
-            [self.num_leaf, self.num_class], requires_grad=True
+            [self.num_leaf, self.num_class], requires_grad=True, device=device
         )
         self.optimizer = torch.optim.Adam(
             self.cut_points_list + [self.leaf_score] + [self.temperature], lr=0.01
         )
 
-    # 计算克罗内克积
     def torch_kron_prod(self, a, b):
         res = torch.einsum("ij,ik->ijk", [a, b])
         res = torch.reshape(res, [-1, np.prod(res.shape[1:])])
         return res
 
-    # 软分箱算法
     def torch_bin(self, x, cut_points, temperature):
         D = cut_points.shape[0]
         W = torch.reshape(torch.linspace(1.0, D + 1.0, D + 1), [1, -1])
+        W = W.to(device)  # 将W迁移到GPU
         cut_points, _ = torch.sort(cut_points)
-        b = torch.cumsum(torch.cat([torch.zeros([1]), -cut_points], 0), 0)
+        b = torch.cumsum(
+            torch.cat([torch.zeros([1], device=device), -cut_points], 0), 0
+        )
         h = torch.matmul(x, W) + b
         h = h / temperature
         res = F.softmax(h, dim=1)
         return res
 
-    # 建树
     def nn_decision_tree(self, x):
         leaf = reduce(
             self.torch_kron_prod,
@@ -205,13 +156,14 @@ class DNDT(nn.Module):
             all_labels = []
             all_preds = []
             for x_batch, y_batch in dataloader:
+                x_batch, y_batch = x_batch.to(device), y_batch.to(device)
                 self.optimizer.zero_grad()
                 y_pred = self.nn_decision_tree(x_batch)
                 loss = F.cross_entropy(y_pred, y_batch)
                 loss.backward()
                 self.optimizer.step()
-                all_labels.extend(y_batch.numpy())
-                all_preds.extend(torch.argmax(y_pred, axis=1).detach().numpy())
+                all_labels.extend(y_batch.cpu().numpy())
+                all_preds.extend(torch.argmax(y_pred, axis=1).cpu().detach().numpy())
 
             accuracy = accuracy_score(all_labels, all_preds)
             f1 = f1_score(all_labels, all_preds)
@@ -237,107 +189,111 @@ class DNDT(nn.Module):
         all_labels = []
         with torch.no_grad():
             for x_batch, y_batch in dataloader:
+                x_batch, y_batch = x_batch.to(device), y_batch.to(device)
                 y_pred = self.nn_decision_tree(x_batch)
-                all_preds.append(torch.argmax(y_pred, axis=1).detach().numpy())
-                all_labels.append(y_batch.numpy())
+                all_preds.append(torch.argmax(y_pred, axis=1).cpu().detach().numpy())
+                all_labels.append(y_batch.cpu().numpy())
         return np.concatenate(all_preds), np.concatenate(all_labels)
 
 
-# 训练和评估函数
 def train_and_evaluate(min_cut, X_train, X_test, y_train, y_test, num_epochs=2000):
-    # num_cut = [1] * min(X_train.shape[1], min_cut)  # 降低每个特征的切分点数
-    print(f"feature number: {X_train.shape[1]}")
-    # num_cut = [1] * min(X_train.shape[1], min_cut)  # 降低每个特征的切分点数
-
-    num_cut = [1] * X_train.shape[1]  # 降低每个特征的切分点数
-
-    dndt = DNDT(num_cut, num_class=2, temperature=0.1)
-
-    # 创建数据加载器
-    train_loader = create_dataloader(X_train, y_train, batch_size=32)
-    test_loader = create_dataloader(X_test, y_test, batch_size=32)
-
-    # 训练模型
-    print(f"Training with min_cut={min_cut}")
-    start_time = time.time()
-    losses, accuracies = dndt.fit(train_loader, num_epochs=1000)
-    print(
-        f"Training time for min_cut={min_cut} for 1000 epochs: {time.time() - start_time} seconds"
-    )
-
-    # 预测并记录1000个epoch的结果
-    y_pred_1000, y_true_1000 = dndt.predict(test_loader)
-    print(f"Classification Report for min_cut={min_cut} at 1000 epochs:")
-    print(classification_report(y_true_1000, y_pred_1000))
-    wandb.log(
-        {
-            "Classification Report 1000": classification_report(
-                y_true_1000, y_pred_1000, output_dict=True
+    feature_num = X_train.shape[1]
+    if feature_num > 12:
+        num_trees = 10
+        features_per_tree = 10
+        trees = []
+        for _ in range(num_trees):
+            selected_features = np.random.choice(
+                feature_num, features_per_tree, replace=False
             )
-        }
-    )
-
-    # 继续训练到2000个epoch
-    losses_2000, accuracies_2000 = dndt.fit(
-        train_loader, num_epochs=1000, start_index=1000
-    )
-    losses.extend(losses_2000)
-    accuracies.extend(accuracies_2000)
-    print(
-        f"Training time for min_cut={min_cut} for 2000 epochs: {time.time() - start_time} seconds"
-    )
-
-    # 预测并记录2000个epoch的结果
-    y_pred_2000, y_true_2000 = dndt.predict(test_loader)
-    print(f"Classification Report for min_cut={min_cut} at 2000 epochs:")
-    print(classification_report(y_true_2000, y_pred_2000))
-    wandb.log(
-        {
-            "Classification Report 2000": classification_report(
-                y_true_2000, y_pred_2000, output_dict=True
+            tree = DNDT([1] * features_per_tree, num_class=2, temperature=0.1).to(
+                device
             )
-        }
-    )
+            trees.append((tree, selected_features))
 
-    return losses, accuracies
+        train_loader = create_dataloader(X_train, y_train, batch_size=32)
+        test_loader = create_dataloader(X_test, y_test, batch_size=32)
+
+        all_train_losses = []
+        all_train_accuracies = []
+
+        for tree, selected_features in trees:
+            X_train_selected = X_train[:, selected_features]
+            X_test_selected = X_test[:, selected_features]
+            train_loader_selected = create_dataloader(
+                X_train_selected, y_train, batch_size=32
+            )
+            test_loader_selected = create_dataloader(
+                X_test_selected, y_test, batch_size=32
+            )
+
+            losses, accuracies = tree.fit(train_loader_selected, num_epochs)
+            all_train_losses.append(losses)
+            all_train_accuracies.append(accuracies)
+
+        def ensemble_predict(dataloader, trees):
+            all_preds = []
+            all_labels = []
+            with torch.no_grad():
+                for x_batch, y_batch in dataloader:
+                    batch_preds = []
+                    for tree, selected_features in trees:
+                        x_batch_selected = x_batch[:, selected_features].to(device)
+                        y_pred = tree.nn_decision_tree(x_batch_selected)
+                        batch_preds.append(
+                            torch.argmax(y_pred, axis=1).cpu().detach().numpy()
+                        )
+                    ensemble_preds = stats.mode(batch_preds, axis=0)[0][0]
+                    all_preds.append(ensemble_preds)
+                    all_labels.append(y_batch.numpy())
+            return np.concatenate(all_preds), np.concatenate(all_labels)
+
+        y_pred_train, y_train_labels = ensemble_predict(train_loader, trees)
+        y_pred_test, y_test_labels = ensemble_predict(test_loader, trees)
+
+        train_accuracy = accuracy_score(y_train_labels, y_pred_train)
+        test_accuracy = accuracy_score(y_test_labels, y_pred_test)
+        f1_train = f1_score(y_train_labels, y_pred_train)
+        f1_test = f1_score(y_test_labels, y_pred_test)
+
+        print("Training Accuracy:", train_accuracy)
+        print("Test Accuracy:", test_accuracy)
+        print("Training F1 Score:", f1_train)
+        print("Test F1 Score:", f1_test)
+
+        print(classification_report(y_test_labels, y_pred_test))
+    else:
+        model = DNDT([1] * min_cut, num_class=2, temperature=0.1).to(device)
+        train_loader = create_dataloader(X_train, y_train, batch_size=32)
+        test_loader = create_dataloader(X_test, y_test, batch_size=32)
+        losses, accuracies = model.fit(train_loader, num_epochs)
+        y_pred_train, _ = model.predict(train_loader)
+        y_pred_test, _ = model.predict(test_loader)
+
+        train_accuracy = accuracy_score(y_train, y_pred_train)
+        test_accuracy = accuracy_score(y_test, y_pred_test)
+        f1_train = f1_score(y_train, y_pred_train)
+        f1_test = f1_score(y_test, y_pred_test)
+
+        print("Training Accuracy:", train_accuracy)
+        print("Test Accuracy:", test_accuracy)
+        print("Training F1 Score:", f1_train)
+        print("Test F1 Score:", f1_test)
+
+        print(classification_report(y_test, y_pred_test))
 
 
 if __name__ == "__main__":
-    wandb.init(project="DNDT-Comparison")
-
-    label_idx = 0  # 使用第一个标签（效价）
-
-    # 加载数据
+    wandb.init(project="EEG_classification")
+    label_idx = 1  # 更改为你要使用的标签索引
     X, y = get_data_and_labels(label_idx)
-
-    # 输出原始数据形状
-    print(f"Original data shape: {X.shape}")
-
-    # 从时间序列数据中提取特征
-    # X = extract_features(X)
-
-    # 输出特征提取后的数据形状
-    print(f"Feature extracted data shape: {X.shape}")
-
-    # 划分训练集和测试集
     X_train, X_test, y_train, y_test = preprocess_data(X, y)
+    print(f"Train set: {X_train.shape}, {y_train.shape}")
+    print(f"Test set: {X_test.shape}, {y_test.shape}")
 
-    # 输出划分后的数据形状
-    print(f"X_train shape: {X_train.shape}, y_train shape: {y_train.shape}")
-    print(f"X_test shape: {X_test.shape}, y_test shape: {y_test.shape}")
-
-    min_cuts = [3, 5]  # 设定不同的min_cut值进行比较
-
-    all_losses = {}
-    all_accuracies = {}
-
-    for min_cut in min_cuts:
-        wandb.run.name = f"DNDT_min_cut_{min_cut}"
-        wandb.run.save()
-        losses, accuracies = train_and_evaluate(
-            min_cut, X_train, X_test, y_train, y_test, num_epochs=2000
-        )
-        all_losses[min_cut] = losses
-        all_accuracies[min_cut] = accuracies
-
-    wandb.finish()
+    min_cut = 32
+    start_time = time.time()
+    train_and_evaluate(min_cut, X_train, X_test, y_train, y_test, num_epochs=2000)
+    end_time = time.time()
+    duration = end_time - start_time
+    print("Training and evaluation time: ", duration)
