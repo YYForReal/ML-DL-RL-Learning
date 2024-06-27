@@ -23,3 +23,9 @@ run-*
 logs*
 *.pth
 ML-Learning/Other/deap-dataset/wandb/*
+ML-Learning/Other/deap-dataset/*/data_preprocessed_python/*
+ML-Learning/Other/**/data_preprocessed_python/*
+**/wandb/**
+WESAD/*
+ML-Learning/Other/WESAD/WESAD/wesad_readme.pdf
+ML-Learning/Other/WESAD/WESAD/**
