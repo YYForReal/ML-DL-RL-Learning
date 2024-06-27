@@ -84,6 +84,8 @@ class DNDT(nn.Module):
                     "Epoch": epoch + start_index,
                 }
             )
+            epoch_losses.append(loss.item())
+            epoch_accuracies.append(accuracy)
             if epoch % (num_epochs // 10) == 0:
                 print(
                     f"Epoch {epoch}, Loss: {loss.item()}, Accuracy: {accuracy}, F1: {f1}"
