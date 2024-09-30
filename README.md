@@ -16,6 +16,7 @@
 8.  使用 DQN、AC方法求解 gymnasium 的Atari 游戏
 9.  使用 DQN 实现 AI走 随机迷宫 （Success）
 10. 机器学习课程使用DNDT模型 实现 基于生理信号（时序）的 情感分类。
+11. 使用 Catboost 模型做保险赔付的回归预测和分类。
 
 ### 学习日志
 
