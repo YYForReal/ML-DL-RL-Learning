@@ -29,3 +29,7 @@ ML-Learning/Other/**/data_preprocessed_python/*
 WESAD/*
 ML-Learning/Other/WESAD/WESAD/wesad_readme.pdf
 ML-Learning/Other/WESAD/WESAD/**
+ML-Learning/Catboost/learn/catboost_info/learn/events.out.tfevents
+ML-Learning/Catboost/learn/catboost_info/test/events.out.tfevents
+ML-Learning/Catboost/blog.md
+ML-Learning/Catboost.zip

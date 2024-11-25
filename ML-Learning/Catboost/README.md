@@ -9,6 +9,8 @@
 回归任务：根据输入特征预测保险索赔的金额。
 分类任务：根据输入特征判断是否需要调查保险案件。
 
+当然，为了方便学习，我也做了一个基于sklearn中California Housing数据集的房价回归预测任务，位于[learn文件夹](https://github.com/YYForReal/ML-DL-RL-Learning/tree/main/ML-Learning/Catboost/learn)，可以立即运行。 
+
 ### CatBoost 模型简介
 CatBoost 是一种基于决策树的梯度提升算法。与其他传统的树模型（如 XGBoost 和 LightGBM）相比，CatBoost 具有以下优势：
 
@@ -36,8 +38,6 @@ draw_line: 应用KNN聚类取中心划线，然后进行可视化。
 
 ### 赞助
 
-如果对你有帮助，也欢迎请我喝杯咖啡。
+如果对你有帮助，也欢迎请我喝杯咖啡。可以备注名字，感激不尽！
 
 <img align="center" src="./results/buy_me_coffee.png">
-
-
